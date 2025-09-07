@@ -231,7 +231,7 @@
         <p>Approximate days for your journey, based on current averages.</p>
       </div>
       <div class="stats">
-        ${['blocks40','days','weeks','months','years'].map(label => {
+        ${['days','weeks','months','years','blocks40'].map(label => {
           let display, precise, heading;
           if (label === 'years') { display = r.journey.years.toFixed(2); precise = r.journey.years; heading = 'Years'; }
           else if (label === 'blocks40') { display = r.journey.blocks40_floor.toLocaleString(); precise = r.journey.blocks40; heading = '40-Day Blocks'; }
