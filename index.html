@@ -211,13 +211,14 @@
     const ageYears = ageMs / 1000 / 60 / 60 / 24 / DAYS_PER_YEAR;
     let remaining = lifeExpectancyYears - ageYears;
     if (remaining < 0) remaining = 0;
-    const days = remaining * DAYS_PER_YEAR;
-    const weeks = days / 7;
+  const days = remaining * DAYS_PER_YEAR;
+  const weeks = days / 7;
+  const blocks40 = days / 40; // 40-day groupings
     const months = remaining * 12;
     const years = remaining;
     const status = remaining === 0 ? 'beyond-average-expectancy' : 'ok';
     const message = status === 'ok' ? `You have approximately ${Math.floor(days).toLocaleString()} purpose-days in your journey. What will you invest one day in today?` : `You’ve surpassed the average—keep investing in what matters.`;
-    return { inputs:{ birth_date: birthDateStr, country, gender, source_year: sourceYear, data_source: 'Bundled CSV (cached 24h)' }, life_expectancy_years: lifeExpectancyYears, age_years: ageYears, journey: { years, months, weeks, days, years_floor: Math.floor(years), months_floor: Math.floor(months), weeks_floor: Math.floor(weeks), days_floor: Math.floor(days) }, status, fallback_used: fallback, message };
+  return { inputs:{ birth_date: birthDateStr, country, gender, source_year: sourceYear, data_source: 'Bundled CSV (cached 24h)' }, life_expectancy_years: lifeExpectancyYears, age_years: ageYears, journey: { years, months, weeks, days, blocks40, years_floor: Math.floor(years), months_floor: Math.floor(months), weeks_floor: Math.floor(weeks), days_floor: Math.floor(days), blocks40_floor: Math.floor(blocks40) }, status, fallback_used: fallback, message };
   }
 
   function renderResult(r) {
@@ -230,12 +231,13 @@
         <p>Approximate days for your journey, based on current averages.</p>
       </div>
       <div class="stats">
-        ${['days','weeks','months','years'].map(label => {
-          const key = label + (label==='years'?'':'_floor');
-          const display = label==='years' ? r.journey.years.toFixed(2) : r.journey[key].toLocaleString();
-          const precise = label==='years'? r.journey.years : r.journey[label];
+        ${['blocks40','days','weeks','months','years'].map(label => {
+          let display, precise, heading;
+          if (label === 'years') { display = r.journey.years.toFixed(2); precise = r.journey.years; heading = 'Years'; }
+          else if (label === 'blocks40') { display = r.journey.blocks40_floor.toLocaleString(); precise = r.journey.blocks40; heading = '40-Day Blocks'; }
+          else { const key = label + '_floor'; display = r.journey[key].toLocaleString(); precise = r.journey[label]; heading = label.charAt(0).toUpperCase()+label.slice(1); }
           return `<div class="stat" data-testid="stat-${label}">
-            <span class="label">${label.charAt(0).toUpperCase()+label.slice(1)}</span>
+            <span class="label">${heading}</span>
             <span class="value">${display}</span>
             <span class="precise">precise: ${precise.toFixed(2)}</span>
           </div>`; }).join('')}
