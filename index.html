@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Days on Purpose</title>
+  <meta name="description" content="Days on Purpose – Turn time into meaningful action." />
+  <style>
+    :root { --accent:#2fb8a4; --bg:#0f1214; --panel:#1b2022; --border:#2a3032; --text:#f5f7f8; --danger:#f87171; font-family: system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Ubuntu,'Helvetica Neue',Arial,sans-serif; }
+    * { box-sizing: border-box; }
+    body { margin:0; background:var(--bg); color:var(--text); -webkit-font-smoothing: antialiased; }
+    main { max-width:720px; margin:0 auto; padding:1.25rem 1rem 4rem; line-height:1.5; }
+    header { margin-bottom:1.5rem; }
+    h1 { margin:0; font-size:clamp(1.9rem,4vw,2.6rem); }
+    header p.tag { margin:.55rem 0 0; font-size:1.05rem; opacity:.85; }
+    form { display:grid; gap:1rem; margin-bottom:2rem; }
+    #form-desc { margin:0; font-size:.9rem; opacity:.75; }
+    .field { display:grid; gap:.25rem; }
+    label { font-weight:500; }
+  input[type=date], input[type=text], select { background:var(--panel); border:1px solid var(--border); border-radius:.55rem; padding:.65rem .8rem; color:inherit; font-size:1rem; }
+    input:focus, select:focus, button:focus, .suggestions button:focus { outline:2px solid var(--accent); outline-offset:2px; }
+    button { font:inherit; }
+    .suggestions { list-style:none; margin:0; padding:.25rem; background:var(--panel); border:1px solid var(--border); border-radius:.55rem; display:grid; gap:.25rem; position:relative; z-index:10; }
+    .suggestions button { width:100%; text-align:left; background:transparent; border:none; padding:.45rem .55rem; color:inherit; border-radius:.4rem; cursor:pointer; }
+    .suggestions button:hover, .suggestions button:focus { background:#222a2c; }
+    .error { color:var(--danger); font-size:.9rem; }
+    .calc-btn { background:var(--accent); color:#fff; border:none; padding:.85rem 1.2rem; font-size:1rem; font-weight:600; border-radius:.65rem; cursor:pointer; transition:background .2s, filter .2s; }
+    .calc-btn[disabled] { opacity:.55; cursor:not-allowed; }
+    .calc-btn:not([disabled]):hover { filter:brightness(1.08); }
+    .calc-btn:not([disabled]):active { filter:brightness(.93); }
+    #result-region:focus { outline:2px solid var(--accent); outline-offset:3px; }
+    .result-card { display:grid; gap:1.75rem; padding:2.25rem 2.25rem 2.5rem; border:1px solid var(--accent); border-radius:1rem; background:linear-gradient(#15191b,#15191b) padding-box, var(--accent) border-box; }
+    .result-head h2 { margin:0 0 .4rem; font-size:2.15rem; line-height:1.15; }
+    .result-head p { margin:0; opacity:.8; font-size:1.1rem; }
+    .stats { display:grid; gap:1.25rem; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); }
+    .stat { background:var(--panel); border:1px solid var(--border); border-radius:1.1rem; padding:1.15rem 1.1rem 1.05rem; display:grid; gap:.45rem; min-width:140px; }
+    .stat .label { font-size:.72rem; letter-spacing:.05em; text-transform:uppercase; opacity:.65; }
+    .stat .value { font-size:2.25rem; line-height:1; color:var(--accent); font-weight:600; letter-spacing:.5px; }
+    .stat .precise { font-size:.72rem; opacity:.55; }
+    .message { margin:0; font-size:1.35rem; line-height:1.4; max-width:60ch; }
+    .note { font-size:.72rem; opacity:.6; margin-top:.5rem; line-height:1.35; }
+    .country-select { max-height:14rem; overflow:auto; }
+    @media (max-width:640px){
+      .result-card { padding:1.6rem 1.3rem 1.9rem; gap:1.4rem; }
+      .result-head h2 { font-size:1.75rem; }
+      .stats { gap:1rem; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); }
+      .stat { padding:.95rem .9rem .9rem; }
+      .stat .value { font-size:1.95rem; }
+      .message { font-size:1.15rem; }
+    }
+    footer { margin-top:3rem; font-size:.75rem; opacity:.6; }
+    @media (prefers-color-scheme: light) { body { background:#f5f7f9; color:#182022; } .stat { background:#ffffff; } input[type=date], input[type=text], select { background:#fff; } .suggestions { background:#fff; } }
+    @media (prefers-reduced-motion: reduce) { * { animation:none!important; transition:none!important; scroll-behavior:auto!important; } }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Days on Purpose</h1>
+    <p class="tag">Turn time into meaningful action.</p>
+  </header>
+  <form id="calculator-form" aria-describedby="form-desc">
+    <p id="form-desc">Enter your details to estimate your purpose days. Statistical averages—never a prediction.</p>
+    <div class="field">
+      <label for="birthDate">Birth Date</label>
+      <input id="birthDate" name="birthDate" type="date" required data-testid="input-birthdate" />
+    </div>
+    <div class="field">
+      <label for="country">Country</label>
+  <select id="country" name="country" data-testid="input-country" size="1" class="country-select"></select>
+    </div>
+    <div class="field">
+      <label for="gender">Gender</label>
+      <select id="gender" name="gender" data-testid="input-gender">
+        <option value="female">female</option>
+        <option value="male">male</option>
+      </select>
+    </div>
+    <div id="error" class="error" role="alert" hidden></div>
+    <button id="calc-btn" class="calc-btn" data-testid="button-calc" type="submit" disabled>Calculate</button>
+  </form>
+
+  <section id="result-region" aria-live="polite" aria-atomic="true" tabindex="-1"></section>
+
+  <footer>
+    <p>Disclaimer: Statistical estimate, not an individual prediction.</p>
+  </footer>
+</main>
+<script>
+(function() {
+  const DAYS_PER_YEAR = 365.2425;
+  const LS_FORM = 'dop_form_v1';
+  const LS_DATA = 'dop_data_cache_v1';
+  const LS_TS = 'dop_data_cache_ts_v1';
+  const CACHE_MS = 24 * 60 * 60 * 1000;
+  // Embedded CSV fallback if network/file fetch blocked (e.g., opened via file://)
+  const EMBEDDED_CSV = `Country,Male Life Expectancy,Female Life Expectancy,Total Life Expectancy\nAfghanistan,64.94,68.08,66.54\nAlbania,78.12,81.74,79.95\nAlgeria,75.30,78.13,76.69\nAngola,62.44,67.54,64.98\nAntigua and Barbuda,74.93,80.60,77.94\nArgentina,75.14,80.16,77.69\nArmenia,71.76,79.73,76.01\nAruba,73.99,79.06,76.64\nAustralia,82.43,85.97,84.21\nAustria,79.97,84.57,82.29\nBahamas,71.21,78.46,74.86\nBahrain,81.03,82.26,81.58\nBangladesh,73.55,76.94,75.19\nBarbados,73.93,78.91,76.49\nBelarus,69.94,79.37,74.79\nBelgium,80.26,84.57,82.43\nBelize,71.23,76.83,73.90\nBenin,59.68,62.61,61.14\nBhutan,71.82,75.55,73.53\nBolivia,66.42,71.51,68.91\nBosnia and Herzegovina,74.88,81.23,78.24\nBotswana,66.90,72.01,69.43\nBrazil,73.14,79.30,76.20\nBrunei,73.65,77.90,75.67\nBulgaria,72.52,79.51,75.96\nBurkina Faso,59.28,63.62,61.47\nBurundi,61.89,66.06,63.97\nCabo Verde,73.25,79.53,76.40\nCambodia,68.29,73.53,70.97\nCameroon,62.05,66.52,64.25\nCanada,80.74,85.03,82.88\nCentral African Republic,55.73,59.80,57.90\nChad,53.54,57.39,55.43\nChile,79.67,83.37,81.54\nChina,75.65,81.25,78.37\nColombia,75.36,80.77,78.09\nCongo,64.51,67.94,66.20\nCosta Rica,78.60,83.72,81.19\nCôte d'Ivoire,60.32,64.49,62.28\nCroatia,75.80,81.95,78.92\nCuba,76.06,80.84,78.45\nCuraçao,72.87,81.10,77.17\nCyprus,80.05,83.93,81.99\nCzech Republic (Czechia),77.35,82.85,80.11\nDR Congo,60.10,64.40,62.23\nDenmark,80.39,84.10,82.25\nDjibouti,63.92,68.96,66.41\nDominican Republic,70.79,77.23,73.99\nEcuador,75.08,80.46,77.76\nEgypt,69.82,74.22,71.99\nEl Salvador,67.99,76.70,72.52\nEquatorial Guinea,62.40,66.10,64.10\nEritrea,67.00,71.22,69.15\nEstonia,75.35,83.30,79.48\nEswatini,61.45,67.26,64.40\nEthiopia,64.62,71.30,67.88\nFiji,65.60,69.72,67.62\nFinland,79.60,84.91,82.24\nFrance,80.73,86.31,83.58\nFrench Guiana,74.52,80.30,77.37\nFrench Polynesia,82.03,86.74,84.31\nGabon,66.23,71.45,68.70\nGambia,64.53,67.96,66.25\nGeorgia,69.93,79.36,74.82\nGermany,79.42,84.01,81.71\nGhana,63.49,68.36,65.89\nGreece,79.74,84.60,82.22\nGrenada,72.67,78.64,75.52\nGuatemala,70.57,75.21,72.89\nGuinea,59.80,62.27,61.06\nGuinea-Bissau,61.96,66.72,64.41\nGuyana,66.73,74.22,70.45\nHaiti,62.07,68.67,65.30\nHonduras,70.65,75.85,73.22\nHong Kong,83.10,88.39,85.77\nHungary,74.07,80.46,77.33\nIceland,81.80,84.57,83.15\nIndia,70.95,74.13,72.48\nIndonesia,69.29,73.61,71.44\nIran,76.22,79.99,78.05\nIraq,70.59,74.33,72.53\nIreland,80.79,84.72,82.75\nIsrael,80.67,84.81,82.77\nItaly,81.94,86.01,84.03\nJamaica,69.17,74.30,71.73\nJapan,81.99,88.03,85.00\nJordan,76.06,80.46,78.13\nKazakhstan,70.43,78.65,74.67\nKenya,61.80,66.32,64.01\nKiribati,64.79,68.48,66.72\nKuwait,79.63,82.15,80.78\nKyrgyzstan,68.44,75.56,71.97\nLaos,67.25,71.80,69.47\nLatvia,71.94,80.72,76.48\nLebanon,76.02,79.99,78.08\nLesotho,55.44,60.87,58.22\nLiberia,61.14,63.80,62.47\nLibya,71.23,75.26,73.19\nLithuania,71.61,80.92,76.32\nLuxembourg,80.91,84.06,82.49\nMadagascar,62.31,65.82,64.04\nMalawi,64.45,70.96,67.74\nMalaysia,74.63,79.67,76.99\nMaldives,80.20,83.17,81.51\nMali,59.46,62.38,60.89\nMalta,81.69,85.51,83.63\nMartinique,79.63,85.84,82.89\nMauritania,66.90,70.97,68.94\nMauritius,72.28,78.50,75.27\nMayotte,74.45,78.68,76.42\nMexico,72.63,78.17,75.45\nMicronesia,68.97,74.79,71.81\nMoldova,66.83,75.81,71.47\nMongolia,67.75,76.88,72.24\nMontenegro,74.12,80.60,77.43\nMorocco,73.54,77.96,75.68\nMozambique,60.66,66.93,63.97\nMyanmar,64.18,70.59,67.30\nNamibia,63.60,71.63,67.66\nNepal,69.32,72.42,70.90\nNetherlands,80.89,83.98,82.45\nNew Caledonia,76.63,81.53,79.07\nNew Zealand,80.77,84.00,82.39\nNicaragua,72.64,77.74,75.27\nNiger,60.69,62.66,61.66\nNigeria,54.45,55.12,54.78\nNorth Korea,71.66,76.02,73.86\nNorth Macedonia,75.41,79.83,77.68\nNorway,82.11,85.09,83.61\nOman,78.95,82.21,80.45\nPakistan,65.58,70.47,67.94\nPanama,77.10,82.84,79.96\nPapua New Guinea,63.94,69.34,66.39\nParaguay,71.14,77.22,74.11\nPeru,75.82,80.45,78.12\nPhilippines,67.10,73.11,70.07\nPoland,75.31,82.61,78.98\nPortugal,79.89,85.37,82.72\nPuerto Rico,78.50,85.50,82.08\nQatar,81.96,83.60,82.68\nRéunion,80.81,86.57,83.80\nRomania,72.74,79.82,76.25\nRussia,67.69,79.32,73.52\nRwanda,65.92,70.39,68.24\nSaint Lucia,69.60,76.60,73.00\nSamoa,70.06,73.97,71.95\nSão Tomé & Príncipe,66.57,74.08,70.08\nSaudi Arabia,77.56,81.51,79.19\nSenegal,67.21,71.26,69.16\nSerbia,73.89,80.35,77.14\nSeychelles,70.23,76.83,73.14\nSierra Leone,60.41,63.90,62.15\nSingapore,81.53,86.48,84.00\nSlovakia,75.41,81.84,78.65\nSlovenia,79.33,84.58,81.94\nSolomon Islands,69.47,72.34,70.83\nSomalia,56.63,61.70,59.11\nSouth Africa,62.95,69.97,66.49\nSouth Korea,81.44,87.40,84.53\nSouth Sudan,54.87,60.86,57.85\nSpain,81.27,86.59,83.96\nSri Lanka,74.65,80.90,77.85\nState of Palestine,69.72,76.86,73.10\nSudan,63.61,70.02,66.70\nSuriname,70.73,77.12,73.90\nSweden,81.84,85.34,83.58\nSwitzerland,82.34,86.06,84.23\nSyria,70.58,75.42,72.99\nTaiwan,78.09,83.88,80.94\nTajikistan,69.78,74.29,72.05\nTanzania,64.59,70.21,67.42\nThailand,72.65,81.17,76.83\nTimor-Leste,66.47,69.92,68.13\nTogo,62.87,63.39,63.14\nTrinidad and Tobago,70.64,76.96,73.75\nTunisia,74.34,79.50,76.90\nTurkey,74.94,80.82,77.82\nTurkmenistan,67.13,73.17,70.33\nUganda,65.70,71.60,68.71\nUkraine,69.99,79.54,74.86\nUnited Arab Emirates,82.37,84.44,83.23\nUnited Kingdom,79.72,83.45,81.60\nUnited States,77.22,82.11,79.61\nUruguay,74.59,82.17,78.45\nUzbekistan,69.68,75.70,72.66\nVanuatu,69.74,74.31,71.84\nVenezuela,69.05,76.82,72.84\nVietnam,70.23,79.49,74.88\nWestern Sahara,70.06,73.99,71.78\nYemen,67.49,71.71,69.58\nZambia,64.25,69.07,66.70\nZimbabwe,60.75,65.61,63.35`;
+
+  const form = document.getElementById('calculator-form');
+  const birthInput = document.getElementById('birthDate');
+  const countryInput = document.getElementById('country');
+  const genderSelect = document.getElementById('gender');
+  const calcBtn = document.getElementById('calc-btn');
+  const resultRegion = document.getElementById('result-region');
+  const errorEl = document.getElementById('error');
+  const state = { dataset: [], countries: [], maxCountry: null };
+
+  // (removed fuzzy search – full list presented in select)
+
+  function countryAliases(str) {
+    const m = {
+      'usa':'United States', 'u.s.a.':'United States', 'us':'United States', 'united states of america':'United States',
+      'uk':'United Kingdom', 'england':'United Kingdom'
+    };
+    const k = str.trim().toLowerCase();
+    return m[k] || str;
+  }
+
+  function normalizeCountry(str) {
+    return countryAliases(str).replace(/\b\w+/g, w=>w[0].toUpperCase()+w.slice(1).toLowerCase());
+  }
+
+  function saveForm() {
+    const data = { birthDate: birthInput.value, country: countryInput.value, gender: genderSelect.value };
+    localStorage.setItem(LS_FORM, JSON.stringify(data));
+  }
+  function restoreForm() {
+    try { const d = JSON.parse(localStorage.getItem(LS_FORM)||''); if (d) {
+      if (d.birthDate) birthInput.value = d.birthDate;
+  if (d.country) countryInput.value = d.country;
+      if (d.gender) {
+        // handle legacy 'total'
+        genderSelect.value = d.gender === 'total' ? 'female' : d.gender;
+      }
+    }} catch {}
+  }
+
+  async function loadDataset() {
+    // cache
+    try {
+      const ts = localStorage.getItem(LS_TS); const raw = localStorage.getItem(LS_DATA);
+      if (ts && raw && Date.now() - Number(ts) < CACHE_MS) {
+        state.dataset = JSON.parse(raw); state.countries = state.dataset.map(r=>r.country); computeMaxCountry(); populateCountrySelect(); return; }
+    } catch {}
+    let text;
+    try {
+      const res = await fetch('data/lifeexpectancy.csv').catch(()=>fetch('./data/lifeexpectancy.csv'));
+      if (!res || !res.ok) throw new Error('bad');
+      text = await res.text();
+    } catch(fetchErr) {
+      // fallback to embedded
+      text = EMBEDDED_CSV;
+    }
+    const lines = text.trim().split(/\r?\n/);
+    const header = lines.shift();
+    const records = [];
+    for (const line of lines) {
+      const parts = line.split(',');
+      if (parts.length < 4) continue;
+      const [country, male, female, total] = parts;
+      records.push({ country: country.trim(), male: Number(male), female: Number(female), total: Number(total), sourceYear: 2023 });
+    }
+  state.dataset = records;
+  state.countries = records.map(r=>r.country);
+  computeMaxCountry();
+  populateCountrySelect();
+    try { localStorage.setItem(LS_DATA, JSON.stringify(records)); localStorage.setItem(LS_TS, String(Date.now())); } catch {}
+  }
+
+  function computeMaxCountry() {
+    if (!state.dataset.length) return;
+    let max = state.dataset[0];
+    for (const r of state.dataset) { if (r.total > max.total) max = r; }
+    state.maxCountry = max.country;
+    if (!countryInput.value) { countryInput.value = state.maxCountry; }
+  }
+
+  function populateCountrySelect() {
+    const sel = countryInput; // select element
+    if (!sel) return;
+    const prev = sel.value;
+    sel.innerHTML = '';
+    const sorted = [...state.countries].sort((a,b)=>a.localeCompare(b));
+    for (const c of sorted) {
+      const opt = document.createElement('option');
+      opt.value = c; opt.textContent = c;
+      sel.appendChild(opt);
+    }
+    if (prev && sorted.includes(prev)) sel.value = prev; else if (state.maxCountry) sel.value = state.maxCountry;
+  }
+
+  function lookup(countryInput, gender) {
+    const norm = normalizeCountry(countryInput);
+    const rec = state.dataset.find(r=>r.country.toLowerCase() === norm.toLowerCase());
+    let fallback = null;
+    if (!rec) {
+      return { years: (state.dataset.find(r=>r.country==='United States')?.total) || 75, sourceYear: 2023, fallback:'default-global', country: norm };
+    }
+    let years;
+    if (gender==='male') years = rec.male; else if (gender==='female') years = rec.female; else years = rec.total;
+    if (!years) { years = rec.total; fallback='country-total'; }
+    return { years, sourceYear: rec.sourceYear, fallback, country: rec.country };
+  }
+
+  function calculateJourney(birthDateStr, country, gender, lifeExpectancyYears, sourceYear, fallback) {
+    const birth = new Date(birthDateStr + 'T00:00:00Z');
+    const now = new Date();
+    const ageMs = now - birth;
+    if (isNaN(ageMs) || ageMs < 0) throw new Error('Invalid birth date');
+    const ageYears = ageMs / 1000 / 60 / 60 / 24 / DAYS_PER_YEAR;
+    let remaining = lifeExpectancyYears - ageYears;
+    if (remaining < 0) remaining = 0;
+    const days = remaining * DAYS_PER_YEAR;
+    const weeks = days / 7;
+    const months = remaining * 12;
+    const years = remaining;
+    const status = remaining === 0 ? 'beyond-average-expectancy' : 'ok';
+    const message = status === 'ok' ? `You have approximately ${Math.floor(days).toLocaleString()} purpose-days in your journey. What will you invest one day in today?` : `You’ve surpassed the average—keep investing in what matters.`;
+    return { inputs:{ birth_date: birthDateStr, country, gender, source_year: sourceYear, data_source: 'Bundled CSV (cached 24h)' }, life_expectancy_years: lifeExpectancyYears, age_years: ageYears, journey: { years, months, weeks, days, years_floor: Math.floor(years), months_floor: Math.floor(months), weeks_floor: Math.floor(weeks), days_floor: Math.floor(days) }, status, fallback_used: fallback, message };
+  }
+
+  function renderResult(r) {
+    resultRegion.innerHTML = '';
+    const container = document.createElement('div');
+    container.className = 'result-card';
+    container.innerHTML = `
+      <div class="result-head">
+        <h2>Your Purpose Days</h2>
+        <p>Approximate days for your journey, based on current averages.</p>
+      </div>
+      <div class="stats">
+        ${['days','weeks','months','years'].map(label => {
+          const key = label + (label==='years'?'':'_floor');
+          const display = label==='years' ? r.journey.years.toFixed(2) : r.journey[key].toLocaleString();
+          const precise = label==='years'? r.journey.years : r.journey[label];
+          return `<div class="stat" data-testid="stat-${label}">
+            <span class="label">${label.charAt(0).toUpperCase()+label.slice(1)}</span>
+            <span class="value">${display}</span>
+            <span class="precise">precise: ${precise.toFixed(2)}</span>
+          </div>`; }).join('')}
+      </div>
+      <p class="message">${r.message}</p>
+      <p class="note">Based on latest life expectancy at birth for ${r.inputs.country} (${r.inputs.gender}, ${r.inputs.source_year}). ${r.fallback_used ? 'Fallback: '+r.fallback_used+'. ' : ''}Source: ${r.inputs.data_source}.</p>
+    `;
+    resultRegion.appendChild(container);
+    container.scrollIntoView({ behavior:'smooth', block:'start' });
+    resultRegion.focus();
+  }
+
+  function validate() {
+  const valid = Boolean(birthInput.value && countryInput.value && genderSelect.value);
+    calcBtn.disabled = !valid;
+  }
+
+  // Event listeners
+  [birthInput, countryInput, genderSelect].forEach(el => el.addEventListener('input', () => { validate(); saveForm(); }));
+  countryInput.addEventListener('change', () => { validate(); saveForm(); });
+
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    errorEl.hidden = true; errorEl.textContent='';
+    try {
+      calcBtn.disabled = true; calcBtn.textContent = 'Calculating…';
+      const lookupRes = lookup(countryInput.value, genderSelect.value);
+      const calc = calculateJourney(birthInput.value, lookupRes.country, genderSelect.value, lookupRes.years, lookupRes.sourceYear, lookupRes.fallback);
+      renderResult(calc);
+    } catch(err) {
+      errorEl.textContent = err.message || 'Calculation failed';
+      errorEl.hidden = false;
+    } finally {
+      calcBtn.textContent = 'Calculate';
+      validate();
+    }
+  });
+
+  // init
+  (async function init(){
+    restoreForm();
+  await loadDataset().catch(err => { errorEl.textContent = 'Dataset load failed (using fallback)'; errorEl.hidden = false; populateCountrySelect(); });
+  // Guarantee country default selection
+  if (!countryInput.value && state.maxCountry) { countryInput.value = state.maxCountry; }
+    validate();
+  })();
+})();
+</script>
+</body>
+</html>

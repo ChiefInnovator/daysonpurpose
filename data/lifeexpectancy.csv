@@ -1,0 +1,193 @@
+Country,Male Life Expectancy,Female Life Expectancy,Total Life Expectancy
+Afghanistan,64.94,68.08,66.54
+Albania,78.12,81.74,79.95
+Algeria,75.30,78.13,76.69
+Angola,62.44,67.54,64.98
+Antigua and Barbuda,74.93,80.60,77.94
+Argentina,75.14,80.16,77.69
+Armenia,71.76,79.73,76.01
+Aruba,73.99,79.06,76.64
+Australia,82.43,85.97,84.21
+Austria,79.97,84.57,82.29
+Bahamas,71.21,78.46,74.86
+Bahrain,81.03,82.26,81.58
+Bangladesh,73.55,76.94,75.19
+Barbados,73.93,78.91,76.49
+Belarus,69.94,79.37,74.79
+Belgium,80.26,84.57,82.43
+Belize,71.23,76.83,73.90
+Benin,59.68,62.61,61.14
+Bhutan,71.82,75.55,73.53
+Bolivia,66.42,71.51,68.91
+Bosnia and Herzegovina,74.88,81.23,78.24
+Botswana,66.90,72.01,69.43
+Brazil,73.14,79.30,76.20
+Brunei,73.65,77.90,75.67
+Bulgaria,72.52,79.51,75.96
+Burkina Faso,59.28,63.62,61.47
+Burundi,61.89,66.06,63.97
+Cabo Verde,73.25,79.53,76.40
+Cambodia,68.29,73.53,70.97
+Cameroon,62.05,66.52,64.25
+Canada,80.74,85.03,82.88
+Central African Republic,55.73,59.80,57.90
+Chad,53.54,57.39,55.43
+Chile,79.67,83.37,81.54
+China,75.65,81.25,78.37
+Colombia,75.36,80.77,78.09
+Congo,64.51,67.94,66.20
+Costa Rica,78.60,83.72,81.19
+Côte d'Ivoire,60.32,64.49,62.28
+Croatia,75.80,81.95,78.92
+Cuba,76.06,80.84,78.45
+Curaçao,72.87,81.10,77.17
+Cyprus,80.05,83.93,81.99
+Czech Republic (Czechia),77.35,82.85,80.11
+DR Congo,60.10,64.40,62.23
+Denmark,80.39,84.10,82.25
+Djibouti,63.92,68.96,66.41
+Dominican Republic,70.79,77.23,73.99
+Ecuador,75.08,80.46,77.76
+Egypt,69.82,74.22,71.99
+El Salvador,67.99,76.70,72.52
+Equatorial Guinea,62.40,66.10,64.10
+Eritrea,67.00,71.22,69.15
+Estonia,75.35,83.30,79.48
+Eswatini,61.45,67.26,64.40
+Ethiopia,64.62,71.30,67.88
+Fiji,65.60,69.72,67.62
+Finland,79.60,84.91,82.24
+France,80.73,86.31,83.58
+French Guiana,74.52,80.30,77.37
+French Polynesia,82.03,86.74,84.31
+Gabon,66.23,71.45,68.70
+Gambia,64.53,67.96,66.25
+Georgia,69.93,79.36,74.82
+Germany,79.42,84.01,81.71
+Ghana,63.49,68.36,65.89
+Greece,79.74,84.60,82.22
+Grenada,72.67,78.64,75.52
+Guatemala,70.57,75.21,72.89
+Guinea,59.80,62.27,61.06
+Guinea-Bissau,61.96,66.72,64.41
+Guyana,66.73,74.22,70.45
+Haiti,62.07,68.67,65.30
+Honduras,70.65,75.85,73.22
+Hong Kong,83.10,88.39,85.77
+Hungary,74.07,80.46,77.33
+Iceland,81.80,84.57,83.15
+India,70.95,74.13,72.48
+Indonesia,69.29,73.61,71.44
+Iran,76.22,79.99,78.05
+Iraq,70.59,74.33,72.53
+Ireland,80.79,84.72,82.75
+Israel,80.67,84.81,82.77
+Italy,81.94,86.01,84.03
+Jamaica,69.17,74.30,71.73
+Japan,81.99,88.03,85.00
+Jordan,76.06,80.46,78.13
+Kazakhstan,70.43,78.65,74.67
+Kenya,61.80,66.32,64.01
+Kiribati,64.79,68.48,66.72
+Kuwait,79.63,82.15,80.78
+Kyrgyzstan,68.44,75.56,71.97
+Laos,67.25,71.80,69.47
+Latvia,71.94,80.72,76.48
+Lebanon,76.02,79.99,78.08
+Lesotho,55.44,60.87,58.22
+Liberia,61.14,63.80,62.47
+Libya,71.23,75.26,73.19
+Lithuania,71.61,80.92,76.32
+Luxembourg,80.91,84.06,82.49
+Madagascar,62.31,65.82,64.04
+Malawi,64.45,70.96,67.74
+Malaysia,74.63,79.67,76.99
+Maldives,80.20,83.17,81.51
+Mali,59.46,62.38,60.89
+Malta,81.69,85.51,83.63
+Martinique,79.63,85.84,82.89
+Mauritania,66.90,70.97,68.94
+Mauritius,72.28,78.50,75.27
+Mayotte,74.45,78.68,76.42
+Mexico,72.63,78.17,75.45
+Micronesia,68.97,74.79,71.81
+Moldova,66.83,75.81,71.47
+Mongolia,67.75,76.88,72.24
+Montenegro,74.12,80.60,77.43
+Morocco,73.54,77.96,75.68
+Mozambique,60.66,66.93,63.97
+Myanmar,64.18,70.59,67.30
+Namibia,63.60,71.63,67.66
+Nepal,69.32,72.42,70.90
+Netherlands,80.89,83.98,82.45
+New Caledonia,76.63,81.53,79.07
+New Zealand,80.77,84.00,82.39
+Nicaragua,72.64,77.74,75.27
+Niger,60.69,62.66,61.66
+Nigeria,54.45,55.12,54.78
+North Korea,71.66,76.02,73.86
+North Macedonia,75.41,79.83,77.68
+Norway,82.11,85.09,83.61
+Oman,78.95,82.21,80.45
+Pakistan,65.58,70.47,67.94
+Panama,77.10,82.84,79.96
+Papua New Guinea,63.94,69.34,66.39
+Paraguay,71.14,77.22,74.11
+Peru,75.82,80.45,78.12
+Philippines,67.10,73.11,70.07
+Poland,75.31,82.61,78.98
+Portugal,79.89,85.37,82.72
+Puerto Rico,78.50,85.50,82.08
+Qatar,81.96,83.60,82.68
+Réunion,80.81,86.57,83.80
+Romania,72.74,79.82,76.25
+Russia,67.69,79.32,73.52
+Rwanda,65.92,70.39,68.24
+Saint Lucia,69.60,76.60,73.00
+Samoa,70.06,73.97,71.95
+São Tomé & Príncipe,66.57,74.08,70.08
+Saudi Arabia,77.56,81.51,79.19
+Senegal,67.21,71.26,69.16
+Serbia,73.89,80.35,77.14
+Seychelles,70.23,76.83,73.14
+Sierra Leone,60.41,63.90,62.15
+Singapore,81.53,86.48,84.00
+Slovakia,75.41,81.84,78.65
+Slovenia,79.33,84.58,81.94
+Solomon Islands,69.47,72.34,70.83
+Somalia,56.63,61.70,59.11
+South Africa,62.95,69.97,66.49
+South Korea,81.44,87.40,84.53
+South Sudan,54.87,60.86,57.85
+Spain,81.27,86.59,83.96
+Sri Lanka,74.65,80.90,77.85
+State of Palestine,69.72,76.86,73.10
+Sudan,63.61,70.02,66.70
+Suriname,70.73,77.12,73.90
+Sweden,81.84,85.34,83.58
+Switzerland,82.34,86.06,84.23
+Syria,70.58,75.42,72.99
+Taiwan,78.09,83.88,80.94
+Tajikistan,69.78,74.29,72.05
+Tanzania,64.59,70.21,67.42
+Thailand,72.65,81.17,76.83
+Timor-Leste,66.47,69.92,68.13
+Togo,62.87,63.39,63.14
+Trinidad and Tobago,70.64,76.96,73.75
+Tunisia,74.34,79.50,76.90
+Turkey,74.94,80.82,77.82
+Turkmenistan,67.13,73.17,70.33
+Uganda,65.70,71.60,68.71
+Ukraine,69.99,79.54,74.86
+United Arab Emirates,82.37,84.44,83.23
+United Kingdom,79.72,83.45,81.60
+United States,77.22,82.11,79.61
+Uruguay,74.59,82.17,78.45
+Uzbekistan,69.68,75.70,72.66
+Vanuatu,69.74,74.31,71.84
+Venezuela,69.05,76.82,72.84
+Vietnam,70.23,79.49,74.88
+Western Sahara,70.06,73.99,71.78
+Yemen,67.49,71.71,69.58
+Zambia,64.25,69.07,66.70
+Zimbabwe,60.75,65.61,63.35
