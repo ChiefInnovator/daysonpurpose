@@ -18,6 +18,7 @@
     .field { display:grid; gap:.25rem; }
     label { font-weight:500; }
   input[type=date], input[type=text], select { background:var(--panel); border:1px solid var(--border); border-radius:.55rem; padding:.65rem .8rem; color:inherit; font-size:1rem; }
+    input[type=date]::-webkit-calendar-picker-indicator { filter: brightness(0) invert(1); opacity:.9; cursor:pointer; }
     input:focus, select:focus, button:focus, .suggestions button:focus { outline:2px solid var(--accent); outline-offset:2px; }
     button { font:inherit; }
     .suggestions { list-style:none; margin:0; padding:.25rem; background:var(--panel); border:1px solid var(--border); border-radius:.55rem; display:grid; gap:.25rem; position:relative; z-index:10; }
@@ -49,7 +50,7 @@
       .message { font-size:1.15rem; }
     }
   footer { margin-top:2rem; font-size:.7rem; opacity:.65; line-height:1.3; }
-    @media (prefers-color-scheme: light) { body { background:#f5f7f9; color:#182022; } .stat { background:#ffffff; } input[type=date], input[type=text], select { background:#fff; } .suggestions { background:#fff; } }
+    @media (prefers-color-scheme: light) { body { background:#f5f7f9; color:#182022; } .stat { background:#ffffff; } input[type=date], input[type=text], select { background:#fff; } input[type=date]::-webkit-calendar-picker-indicator { filter:none; opacity:1; } .suggestions { background:#fff; } }
     @media (prefers-reduced-motion: reduce) { * { animation:none!important; transition:none!important; scroll-behavior:auto!important; } }
   </style>
 </head>
@@ -111,10 +112,26 @@
   function countryAliases(str) {
     const m = {
       'usa':'United States', 'u.s.a.':'United States', 'us':'United States', 'united states of america':'United States',
-      'uk':'United Kingdom', 'england':'United Kingdom'
+      'uk':'United Kingdom', 'england':'United Kingdom',
+      'republic of korea':'South Korea', 'korea, republic of':'South Korea', 'south korea':'South Korea',
+      'uae':'United Arab Emirates', 'u.a.e.':'United Arab Emirates', 'emirates':'United Arab Emirates',
+      'saudi':'Saudi Arabia', 'saudi arabia':'Saudi Arabia',
+      'viet nam':'Vietnam', 'viet-nam':'Vietnam'
     };
     const k = str.trim().toLowerCase();
     return m[k] || str;
+  }
+
+  function escapeHtml(value) {
+    return String(value).replace(/[&<>"']/g, ch => {
+      switch (ch) {
+        case '&': return '&amp;';
+        case '<': return '&lt;';
+        case '>': return '&gt;';
+        case '"': return '&quot;';
+        default: return '&#39;';
+      }
+    });
   }
 
   function normalizeCountry(str) {
@@ -159,7 +176,13 @@
       const parts = line.split(',');
       if (parts.length < 4) continue;
       const [country, male, female, total] = parts;
-      records.push({ country: country.trim(), male: Number(male), female: Number(female), total: Number(total), sourceYear: 2023 });
+      const name = country.trim();
+      if (!name) continue;
+      const maleNum = Number(male);
+      const femaleNum = Number(female);
+      const totalNum = Number(total);
+      if ([maleNum, femaleNum, totalNum].some(n => !Number.isFinite(n))) continue;
+      records.push({ country: name, male: maleNum, female: femaleNum, total: totalNum, sourceYear: 2023 });
     }
   state.dataset = records;
   state.countries = records.map(r=>r.country);
@@ -199,7 +222,7 @@
     }
     let years;
     if (gender==='male') years = rec.male; else if (gender==='female') years = rec.female; else years = rec.total;
-    if (!years) { years = rec.total; fallback='country-total'; }
+    if (!Number.isFinite(years)) { years = rec.total; fallback='country-total'; }
     return { years, sourceYear: rec.sourceYear, fallback, country: rec.country };
   }
 
@@ -208,7 +231,7 @@
     const now = new Date();
     const ageMs = now - birth;
     if (isNaN(ageMs) || ageMs < 0) throw new Error('Invalid birth date');
-    const ageYears = ageMs / 1000 / 60 / 60 / 24 / DAYS_PER_YEAR;
+    const ageYears = ageMs / (1000 * 60 * 60 * 24 * DAYS_PER_YEAR);
     let remaining = lifeExpectancyYears - ageYears;
     if (remaining < 0) remaining = 0;
   const days = remaining * DAYS_PER_YEAR;
@@ -239,7 +262,7 @@
           else if (label === 'blocks100') { display = r.journey.blocks100_floor.toLocaleString(); precise = r.journey.blocks100; heading = '100-Day Blocks'; }
           else { const key = label + '_floor'; display = r.journey[key].toLocaleString(); precise = r.journey[label]; heading = label.charAt(0).toUpperCase()+label.slice(1); }
           return `<div class="stat" data-testid="stat-${label}">
-            <span class="label">${heading}</span>
+            <span class="label">${escapeHtml(heading)}</span>
             <span class="value">${display}</span>
             <span class="precise">precise: ${precise.toFixed(2)}</span>
           </div>`; }).join('')}
