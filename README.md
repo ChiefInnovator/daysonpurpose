@@ -1,3 +1,4 @@
+```markdown
 # **Days on Purpose**
 
 *Turn time into meaningful action.*  
@@ -31,6 +32,7 @@ This project is licensed under the MIT License. See the LICENSE file for details
 ---
 
 Built by [Chief Innovator](https://mill5.com)
+```
 
 ---
 
