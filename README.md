@@ -49,6 +49,21 @@ We welcome contributions! Feel free to submit issues, suggestions, or pull reque
 ## 📄 License
 This project is licensed under the MIT License. See the LICENSE file for details.
 
+---
+
+### 🤖 Contact
+- **Developer**: [Richard Crane](https://inventingfirewith.ai)
+- **Email**: [rich@mill5.com](mailto:rich@mill5.com)
+
+### 🌐 Related Links
+- [Microsoft MVP](https://mvp.microsoft.com/en-US/MVP/profile/10ce0bc0-7536-43f6-b28c-e9601a4a0d0d) - Rich has been a Microsoft Most Valued Professional for several years now in AI, Azure, Dev, DevOps, and more.
+- [Inventing Fire with AI](https://inventingfirewith.ai) - The website for the Inventing Fire with AI podcast.
+- [MILL5](https://www.mill5.com) - An AI innovation company.
+
+---
+
+<sub>Powered by [Days on Purpose](https://chiefinnovator.github.io/daysonpurpose/)</sub>
+
 
 ---
 
