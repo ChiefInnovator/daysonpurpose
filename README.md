@@ -16,22 +16,39 @@ Days on Purpose is a single-page application designed to help you frame your lif
 * **Gender-Specific Calculations**: Offers tailored calculations based on gender for more accurate results.
 * **Mobile-First Design**: Responsive layout ensures a great experience on smartphones and tablets.
 
-## 🚀 Quick Start
+## 🚀 Getting Started
 1. **Access the App**: Visit our [live demo](https://chiefinnovator.github.io/daysonpurpose/) to try it out directly in your browser.
 2. **Input Your Details**: Enter your birth date, select your country, and choose your gender.
 3. **Calculate**: Click the "Calculate" button to see your estimated remaining purpose days.
 
-No installation required! You can also run it locally by opening `index.html` in a modern browser.
+### Local Setup
+To run the application locally:
+1. Clone the repository:
+    ```bash
+    git clone https://github.com/ChiefInnovator/daysonpurpose.git
+    ```
+2. Navigate to the project directory:
+    ```bash
+    cd daysonpurpose
+    ```
+3. Open `index.html` in a modern browser.
+
+## 🏗️ Architecture
+The application is built using TypeScript and React, structured to provide a clean separation of concerns. Key files include:
+- `src/components/App.tsx`: The main application component.
+- `src/lib/calculator.ts`: Contains the logic for calculating life expectancy and remaining days.
+- `src/providers/expectancyProvider.ts`: Manages the life expectancy data fetching and caching.
+
+### Tech Stack
+- **Frontend**: TypeScript, React
+- **Styling**: CSS
+- **Data Handling**: CSV for life expectancy data
 
 ## 🤝 Contributing
 We welcome contributions! Feel free to submit issues, suggestions, or pull requests to enhance the project.
 
 ## 📄 License
 This project is licensed under the MIT License. See the LICENSE file for details.
-
----
-
-Built by [Chief Innovator](https://mill5.com)
 ```
 
 ---
