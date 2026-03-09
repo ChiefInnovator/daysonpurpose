@@ -1,7 +1,6 @@
-```markdown
 # **Days on Purpose**
 
-*Turn time into meaningful action.*  
+*Turn time into meaningful action.*
 
 ## ✨ Overview
 Days on Purpose is a single-page application designed to help you frame your life around purposeful action. By entering your birth date, country, and gender, you can estimate your remaining "purpose days" in days, weeks, months, and years using life expectancy data. Focus on clarity, momentum, and investment—not fear or countdowns.
@@ -49,7 +48,7 @@ We welcome contributions! Feel free to submit issues, suggestions, or pull reque
 
 ## 📄 License
 This project is licensed under the MIT License. See the LICENSE file for details.
-```
+
 
 ---
 
