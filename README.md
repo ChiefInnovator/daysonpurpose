@@ -57,12 +57,22 @@ This project is licensed under the MIT License. See the LICENSE file for details
 
 ### 🌐 Related Links
 - [MILL5](https://www.mill5.com) - An AI innovation company.
-- [Microsoft MVP](https://mvp.microsoft.com/en-US/MVP/profile/10ce0bc0-7536-43f6-b28c-e9601a4a0d0d) - Rich has been a Microsoft Most Valued Professional for several years now in AI, Azure, Dev, DevOps, and more.
+- [Microsoft MVP](https://mvp.microsoft.com/en-US/MVP/profile/10ce0bc0-7536-43f6-b28c-e9601a4a0d0d) - Rich has been a Microsoft Most Valued Professional for several years in AI, Azure, Developer Technologies, and DevOps — building with [Visual Studio Code](https://code.visualstudio.com) and shipping on [GitHub](https://github.com/ChiefInnovator) every day.
+- [Visual Studio Code](https://code.visualstudio.com) - The editor behind this project.
+- [GitHub](https://github.com/ChiefInnovator) - Source, releases, and issues.
 - [Inventing Fire with AI](https://inventingfirewith.ai) - The website for the Inventing Fire with AI podcast.
 
 ---
 
-<sub>Powered by [Days on Purpose](https://chiefinnovator.github.io/daysonpurpose/)</sub>
+Discover your remaining purpose-days and frame your life around clarity, focus, and momentum with **Days on Purpose**. ⏳
+
+---
+
+*Powered by [MILL5](https://www.mill5.com)*
+*Built in [Visual Studio Code](https://code.visualstudio.com) and shipped on [GitHub](https://github.com/ChiefInnovator/daysonpurpose)*
+*Explore Richard Crane on [Microsoft MVP](https://mvp.microsoft.com/en-US/MVP/profile/10ce0bc0-7536-43f6-b28c-e9601a4a0d0d)*
+*Listen to the [Inventing Fire with AI](https://inventingfirewith.ai) podcast for insights on technology and innovation.*
+*For support, contact: rich@mill5.com*
 
 
 ---
