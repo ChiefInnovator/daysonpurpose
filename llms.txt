@@ -1,0 +1,54 @@
+# Days on Purpose
+
+> Turn time into meaningful action.
+
+Days on Purpose is a free, browser-based life expectancy calculator that reframes remaining time as "purpose-days" — a resource for clarity, focus, and intentional living. It is not a medical tool or mortality countdown.
+
+## How It Works
+
+1. Enter your **birth date**, **country**, and **gender**.
+2. The app looks up the latest life expectancy at birth (WHO/World Bank data, 190+ countries).
+3. It calculates your approximate remaining **days, weeks, months, and years** independently using 365.2425 days/year.
+4. Results are presented with a positive, purpose-centric message encouraging daily intentional action.
+
+## Key Facts
+
+- **No backend** — all computation runs in the browser.
+- **Data source**: WHO/World Bank life expectancy at birth by country and gender (2023).
+- **Fallbacks**: If country+gender is unavailable, falls back to country total, then global average.
+- **Privacy**: No data is sent to any server. Birth date and preferences are stored in Local Storage only.
+- **Free**: No cost, no sign-up.
+
+## Inputs
+
+- `birth_date`: ISO date (YYYY-MM-DD)
+- `country`: One of 190+ supported countries (auto-detected via IP geolocation)
+- `gender`: female or male
+
+## Outputs
+
+- **Days**: remaining_years × 365.2425
+- **Weeks**: days ÷ 7
+- **Months**: remaining_years × 12
+- **Years**: remaining_years (decimal)
+- **40-Day Blocks**: days ÷ 40
+- **100-Day Blocks**: days ÷ 100
+- A motivational message: "What will you invest one day in today?"
+
+## Tone & Philosophy
+
+- Purpose-first, never fear-based.
+- Uses "days for your journey" and "purpose-days" rather than "time left" or "countdown."
+- Encourages daily micro-actions: setting goals, logging reflections, celebrating wins.
+
+## Author
+
+Richard Crane
+
+## URL
+
+https://daysonpurpose.com/
+
+## Docs
+
+- [Specification](https://daysonpurpose.com/specs/days_on_purpose_spec.md)

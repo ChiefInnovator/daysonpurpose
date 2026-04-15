@@ -3,8 +3,96 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Days on Purpose</title>
-  <meta name="description" content="Days on Purpose – Turn time into meaningful action." />
+  <title>Days on Purpose — Turn Time Into Meaningful Action</title>
+
+  <!-- SEO -->
+  <meta name="description" content="Calculate your remaining purpose-days based on life expectancy data. Days on Purpose helps you frame your life around clarity, focus, and meaningful action." />
+  <meta name="keywords" content="life expectancy calculator, purpose days, meaningful living, life planning, days remaining, intentional living, life calculator" />
+  <meta name="author" content="Richard Crane" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://daysonpurpose.com/" />
+
+  <!-- Open Graph / Link Preview -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Days on Purpose — Turn Time Into Meaningful Action" />
+  <meta property="og:description" content="Calculate your remaining purpose-days based on life expectancy data. Frame your life around clarity, focus, and momentum." />
+  <meta property="og:url" content="https://daysonpurpose.com/" />
+  <meta property="og:site_name" content="Days on Purpose" />
+  <meta property="og:image" content="https://daysonpurpose.com/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Days on Purpose — a purpose-driven life calculator" />
+  <meta property="og:locale" content="en_US" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Days on Purpose — Turn Time Into Meaningful Action" />
+  <meta name="twitter:description" content="Calculate your remaining purpose-days based on life expectancy data. Frame your life around clarity, focus, and momentum." />
+  <meta name="twitter:image" content="https://daysonpurpose.com/og-image.png" />
+  <meta name="twitter:image:alt" content="Days on Purpose — a purpose-driven life calculator" />
+
+  <!-- AEO: Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Days on Purpose",
+    "url": "https://daysonpurpose.com/",
+    "description": "Calculate your remaining purpose-days based on life expectancy data. Helps you frame your life around clarity, focus, and meaningful action.",
+    "applicationCategory": "LifestyleApplication",
+    "operatingSystem": "All",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "Richard Crane"
+    },
+    "featureList": [
+      "Life expectancy calculator by country and gender",
+      "Purpose-days, weeks, months, and years estimation",
+      "Auto-detect country via geolocation",
+      "Supports 190+ countries with WHO/World Bank data"
+    ],
+    "screenshot": "https://daysonpurpose.com/og-image.png"
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is Days on Purpose?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Days on Purpose is a free tool that calculates your approximate remaining purpose-days based on life expectancy data for your country and gender. It reframes time as a resource for meaningful action rather than a countdown."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does Days on Purpose calculate remaining days?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "It uses your birth date, country, and gender to look up the latest life expectancy at birth from WHO/World Bank data, then computes your remaining years, months, weeks, and days independently using 365.2425 days per year."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is Days on Purpose a medical prediction?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Days on Purpose uses statistical averages for life expectancy at birth. It is not a medical or individual prediction—it is a motivational tool to help you live with greater intention."
+        }
+      }
+    ]
+  }
+  </script>
+
   <style>
     :root { --accent:#2fb8a4; --bg:#0f1214; --panel:#1b2022; --border:#2a3032; --text:#f5f7f8; --danger:#f87171; font-family: system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Ubuntu,'Helvetica Neue',Arial,sans-serif; }
     * { box-sizing: border-box; }
@@ -301,6 +389,26 @@
     }
   });
 
+  // Geo: auto-detect country via IP geolocation
+  async function detectCountry() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(LS_FORM) || '{}');
+      if (saved && saved.country) return; // user already has a saved preference
+      const res = await fetch('https://ipapi.co/json/', { signal: AbortSignal.timeout(3000) });
+      if (!res.ok) return;
+      const data = await res.json();
+      const detectedCountry = data.country_name;
+      if (!detectedCountry) return;
+      const norm = normalizeCountry(detectedCountry);
+      const match = state.countries.find(c => c.toLowerCase() === norm.toLowerCase());
+      if (match) {
+        countryInput.value = match;
+        saveForm();
+        validate();
+      }
+    } catch { /* silent fail – geo is a convenience, not required */ }
+  }
+
   // init
   (async function init(){
     restoreForm();
@@ -308,6 +416,7 @@
   // Guarantee country default selection
   if (!countryInput.value && state.maxCountry) { countryInput.value = state.maxCountry; }
     validate();
+    detectCountry(); // fire-and-forget geo detection
   })();
 })();
 </script>
