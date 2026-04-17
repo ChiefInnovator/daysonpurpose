@@ -127,6 +127,15 @@
     .stat .value { font-size:2.25rem; line-height:1; color:var(--accent); font-weight:600; letter-spacing:.5px; }
     .stat .precise { font-size:.72rem; opacity:.55; }
   .message { margin:0; font-size:1.25rem; line-height:1.35; max-width:60ch; }
+    .countdown { display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:center; gap:.35rem .5rem; background:var(--panel); border:1px solid var(--border); border-radius:.9rem; padding:1rem .75rem .85rem; font-variant-numeric:tabular-nums; }
+    .cd-cell { display:grid; justify-items:center; gap:.2rem; min-width:3.2rem; }
+    .cd-val { font-size:1.85rem; line-height:1; color:var(--accent); font-weight:600; letter-spacing:.5px; }
+    .cd-lbl { font-size:.6rem; letter-spacing:.08em; text-transform:uppercase; opacity:.6; }
+    .cd-sep { font-size:1.6rem; line-height:1; color:var(--accent); opacity:.55; align-self:center; padding-bottom:1rem; }
+    .cd-total { display:grid; justify-items:center; gap:.25rem; margin-top:.1rem; background:var(--panel); border:1px solid var(--border); border-radius:.9rem; padding:.85rem .75rem; font-variant-numeric:tabular-nums; }
+    .cd-total-val { font-size:2.1rem; line-height:1; color:var(--accent); font-weight:600; letter-spacing:.5px; }
+    .cd-total-lbl { font-size:.62rem; letter-spacing:.1em; text-transform:uppercase; opacity:.65; }
+    @media (max-width:520px){ .cd-val { font-size:1.45rem; } .cd-cell { min-width:2.5rem; } .cd-sep { font-size:1.3rem; padding-bottom:.85rem; } .cd-total-val { font-size:1.65rem; } }
     .note { font-size:.72rem; opacity:.6; margin-top:.5rem; line-height:1.35; }
     .country-select { max-height:14rem; overflow:auto; }
     @media (max-width:640px){
@@ -161,8 +170,8 @@
     <div class="field">
       <label for="gender">Gender</label>
       <select id="gender" name="gender" data-testid="input-gender">
-        <option value="female">female</option>
         <option value="male">male</option>
+        <option value="female">female</option>
       </select>
     </div>
     <div id="error" class="error" role="alert" hidden></div>
@@ -281,9 +290,8 @@
 
   function computeMaxCountry() {
     if (!state.dataset.length) return;
-    let max = state.dataset[0];
-    for (const r of state.dataset) { if (r.total > max.total) max = r; }
-    state.maxCountry = max.country;
+    const us = state.dataset.find(r => r.country === 'United States');
+    state.maxCountry = us ? us.country : state.dataset[0].country;
     if (!countryInput.value) { countryInput.value = state.maxCountry; }
   }
 
@@ -322,6 +330,7 @@
     const ageYears = ageMs / (1000 * 60 * 60 * 24 * DAYS_PER_YEAR);
     let remaining = lifeExpectancyYears - ageYears;
     if (remaining < 0) remaining = 0;
+    const endTimestampMs = birth.getTime() + lifeExpectancyYears * DAYS_PER_YEAR * 24 * 60 * 60 * 1000;
   const days = remaining * DAYS_PER_YEAR;
   const weeks = days / 7;
   const blocks40 = days / 40; // 40-day groupings
@@ -330,7 +339,7 @@
     const years = remaining;
     const status = remaining === 0 ? 'beyond-average-expectancy' : 'ok';
     const message = status === 'ok' ? `You have approximately ${Math.floor(days).toLocaleString()} purpose-days in your journey. What will you invest one day in today?` : `You’ve surpassed the average—keep investing in what matters.`;
-  return { inputs:{ birth_date: birthDateStr, country, gender, source_year: sourceYear, data_source: 'Bundled CSV (cached 24h)' }, life_expectancy_years: lifeExpectancyYears, age_years: ageYears, journey: { years, months, weeks, days, blocks40, blocks100, years_floor: Math.floor(years), months_floor: Math.floor(months), weeks_floor: Math.floor(weeks), days_floor: Math.floor(days), blocks40_floor: Math.floor(blocks40), blocks100_floor: Math.floor(blocks100) }, status, fallback_used: fallback, message };
+  return { inputs:{ birth_date: birthDateStr, country, gender, source_year: sourceYear, data_source: 'Bundled CSV (cached 24h)' }, life_expectancy_years: lifeExpectancyYears, age_years: ageYears, end_timestamp_ms: endTimestampMs, journey: { years, months, weeks, days, blocks40, blocks100, years_floor: Math.floor(years), months_floor: Math.floor(months), weeks_floor: Math.floor(weeks), days_floor: Math.floor(days), blocks40_floor: Math.floor(blocks40), blocks100_floor: Math.floor(blocks100) }, status, fallback_used: fallback, message };
   }
 
   function renderResult(r) {
@@ -341,6 +350,16 @@
       <div class="result-head">
         <h2>Your Purpose Days</h2>
         <p>Approximate days for your journey, based on current averages.</p>
+      </div>
+      <div class="countdown" id="countdown" role="timer" aria-live="off" aria-label="Live countdown of remaining time">
+        ${['years','months','weeks','days','hours','minutes','seconds'].map((lbl,i,arr) => {
+          const cell = `<div class="cd-cell"><div class="cd-val" data-cd="${lbl}">--</div><div class="cd-lbl">${lbl}</div></div>`;
+          return i < arr.length - 1 ? cell + '<div class="cd-sep" aria-hidden="true">:</div>' : cell;
+        }).join('')}
+      </div>
+      <div class="cd-total" role="timer" aria-live="off" aria-label="Total seconds remaining">
+        <div class="cd-total-val" data-cd="total-seconds">--</div>
+        <div class="cd-total-lbl">total seconds remaining</div>
       </div>
       <div class="stats">
         ${['days','weeks','months','years','blocks40','blocks100'].map(label => {
@@ -359,8 +378,53 @@
       <p class="note">Based on latest life expectancy at birth for ${r.inputs.country} (${r.inputs.gender}, ${r.inputs.source_year}). ${r.fallback_used ? 'Fallback: '+r.fallback_used+'. ' : ''}Source: ${r.inputs.data_source}.</p>
     `;
     resultRegion.appendChild(container);
+    startCountdown(r.end_timestamp_ms);
     container.scrollIntoView({ behavior:'smooth', block:'start' });
     resultRegion.focus();
+  }
+
+  let countdownTimer = null;
+  function startCountdown(endMs) {
+    if (countdownTimer) { clearInterval(countdownTimer); countdownTimer = null; }
+    const root = document.getElementById('countdown');
+    if (!root || !Number.isFinite(endMs)) return;
+    const SEC = 1000, MIN = 60*SEC, HOUR = 60*MIN, DAY = 24*HOUR, WEEK = 7*DAY;
+    const YEAR = DAYS_PER_YEAR * DAY;
+    const MONTH = YEAR / 12;
+    const slots = ['years','months','weeks','days','hours','minutes','seconds'];
+    const cells = {};
+    for (const k of slots) cells[k] = root.querySelector('[data-cd="' + k + '"]');
+    const totalSecondsEl = document.querySelector('[data-cd="total-seconds"]');
+    function pad(n) { return String(Math.max(0, n)).padStart(2, '0'); }
+    function tick() {
+      let ms = endMs - Date.now();
+      if (ms <= 0) {
+        for (const k of slots) {
+          if (!cells[k]) continue;
+          cells[k].textContent = (k === 'hours' || k === 'minutes' || k === 'seconds') ? '00' : '0';
+        }
+        if (totalSecondsEl) totalSecondsEl.textContent = '0';
+        clearInterval(countdownTimer); countdownTimer = null; return;
+      }
+      const totalSeconds = Math.floor(ms / SEC);
+      if (totalSecondsEl) totalSecondsEl.textContent = totalSeconds.toLocaleString();
+      const y = Math.floor(ms / YEAR); ms -= y * YEAR;
+      const mo = Math.floor(ms / MONTH); ms -= mo * MONTH;
+      const w = Math.floor(ms / WEEK); ms -= w * WEEK;
+      const d = Math.floor(ms / DAY); ms -= d * DAY;
+      const h = Math.floor(ms / HOUR); ms -= h * HOUR;
+      const mi = Math.floor(ms / MIN); ms -= mi * MIN;
+      const s = Math.floor(ms / SEC);
+      cells.years.textContent = y.toLocaleString();
+      cells.months.textContent = String(mo);
+      cells.weeks.textContent = String(w);
+      cells.days.textContent = String(d);
+      cells.hours.textContent = pad(h);
+      cells.minutes.textContent = pad(mi);
+      cells.seconds.textContent = pad(s);
+    }
+    tick();
+    countdownTimer = setInterval(tick, 1000);
   }
 
   function validate() {
