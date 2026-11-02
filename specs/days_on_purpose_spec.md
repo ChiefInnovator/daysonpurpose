@@ -28,16 +28,9 @@ Create an application that helps users frame their lives around **purposeful act
 - If `remaining_years <= 0`, set all to 0 and mark `"status":"beyond-average-expectancy"`.
 
 ## Output (JSON)
-Return structured data and a purpose-centric message:
+`calculateJourney()` in `src/calculator.js` returns the computed journey and a purpose-centric message. The inputs (country, gender, data source, and year) come from the dataset lookup and are shown in the result footnote, not repeated in this object:
 ```json
 {
-  "inputs": {
-    "birth_date": "1970-09-19",
-    "country": "United States",
-    "gender": "male",
-    "source_year": 2023,
-    "data_source": "UN WPP 2024"
-  },
   "life_expectancy_years": 77.22,
   "age_years": 55.98,
   "journey": {
@@ -50,6 +43,7 @@ Return structured data and a purpose-centric message:
     "weeks_floor": 1112,
     "days_floor": 7786
   },
+  "end_timestamp_ms": 3018816000000,
   "status": "ok",
   "message": "You have approximately 7,786 purpose-days in your journey. What will you invest one day in today?"
 }
@@ -121,7 +115,7 @@ Return structured data and a purpose-centric message:
 - **Typography:** One clean sans‑serif; clear hierarchy (H1 title, H2 section headers, stat numbers in display size).
 - **Color:** Neutral background, high‑contrast text; one accent color for primary actions and stat emphasis.
 - **Components:**
-  - **Form** with inputs: date picker (YYYY‑MM‑DD), country autocomplete with fuzzy match, gender select (female/male), primary button.
+  - **Form** with inputs: date picker (YYYY‑MM‑DD), country select listing every dataset country (suggested from the browser language), gender select (female/male), primary button.
   - **Result Card** with four stat tiles (Days/Weeks/Months/Years), each computed independently; include integer floor and two‑decimal hover/alt text.
   - **Footnote** with source, country, gender, year.
   - **CTA row:** “Add a Goal,” “Schedule Today’s Micro‑Win,” “Log a Reflection” (stub buttons or links).

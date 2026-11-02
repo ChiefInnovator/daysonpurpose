@@ -42,9 +42,9 @@ A free, no-account, browser-only calculator that turns a statistical average int
 - Outputs: days, weeks, months, years, 40-day blocks, 100-day blocks, a live ticker (years through seconds) and a total-seconds figure, a purpose message, and a source footnote.
 - Each unit is computed from remaining years using 365.2425 days per year.
 - No backend, no account, no analytics. All computation runs in the browser.
-- Planned per `docs/designs/days-on-purpose-v2.md`: ES modules with no build step, UN World Population Prospects 2024 data, no third-party network requests, country suggested from browser language.
+- Built per `docs/designs/days-on-purpose-v2.md`: ES modules with no build step, UN World Population Prospects 2024 data (2023 estimates), no third-party network requests, country suggested from browser language.
 - Terminology: "purpose days", "days for your journey", "invest today". The visible and ARIA text avoids "countdown", "remaining", and "left".
-- License: PolyForm Strict 1.0.0 (planned; see the design doc).
+- License: PolyForm Strict 1.0.0 (`LICENSE`).
 
 ## Brand Commitments
 
