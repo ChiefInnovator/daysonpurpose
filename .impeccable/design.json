@@ -1,0 +1,321 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-02T16:04:36.784062+00:00",
+  "title": "Design System: Days on Purpose",
+  "extensions": {
+    "colorMeta": {
+      "purpose-teal": {
+        "role": "primary",
+        "displayName": "Purpose Teal",
+        "canonical": "#2fb8a4",
+        "tonalRamp": [
+          "#193330",
+          "#265e56",
+          "#2f8e80",
+          "#34c1ad",
+          "#64cebf",
+          "#98d7ce",
+          "#c8e5e0",
+          "#eff6f5"
+        ]
+      },
+      "night-field": {
+        "role": "neutral",
+        "displayName": "Night Field",
+        "canonical": "#0f1214",
+        "tonalRamp": [
+          "#232729",
+          "#3c4449",
+          "#53616a",
+          "#697e8b",
+          "#8c9ca6",
+          "#b0b9bf",
+          "#d3d7da",
+          "#f1f2f3"
+        ]
+      },
+      "result-slate": {
+        "role": "neutral",
+        "displayName": "Result Slate",
+        "canonical": "#15191b",
+        "tonalRamp": [
+          "#232729",
+          "#3c4448",
+          "#546268",
+          "#6b7f89",
+          "#8e9da4",
+          "#b1babe",
+          "#d3d7d9",
+          "#f2f2f3"
+        ]
+      },
+      "panel-slate": {
+        "role": "neutral",
+        "displayName": "Panel Slate",
+        "canonical": "#1b2022",
+        "tonalRamp": [
+          "#242729",
+          "#3d4548",
+          "#556267",
+          "#6d8088",
+          "#8f9da3",
+          "#b2babe",
+          "#d3d7d9",
+          "#f2f3f3"
+        ]
+      },
+      "hover-slate": {
+        "role": "neutral",
+        "displayName": "Hover Slate",
+        "canonical": "#222a2c",
+        "tonalRamp": [
+          "#232829",
+          "#3c4648",
+          "#546469",
+          "#6b848a",
+          "#8da0a5",
+          "#b1bcbe",
+          "#d3d8d9",
+          "#f1f3f3"
+        ]
+      },
+      "hairline-slate": {
+        "role": "neutral",
+        "displayName": "Hairline Slate",
+        "canonical": "#2a3032",
+        "tonalRamp": [
+          "#242728",
+          "#3e4446",
+          "#576265",
+          "#708085",
+          "#919da1",
+          "#b3babc",
+          "#d4d7d8",
+          "#f2f3f3"
+        ]
+      },
+      "page-white": {
+        "role": "neutral",
+        "displayName": "Page White",
+        "canonical": "#f5f7f8",
+        "tonalRamp": [
+          "#22282a",
+          "#3a454b",
+          "#50636c",
+          "#65818f",
+          "#899ea9",
+          "#aebbc1",
+          "#d2d8da",
+          "#f1f3f3"
+        ]
+      },
+      "soft-coral": {
+        "role": "error",
+        "displayName": "Soft Coral",
+        "canonical": "#f87171",
+        "tonalRamp": [
+          "#3a1212",
+          "#6d1818",
+          "#a61616",
+          "#e70e0e",
+          "#ea4848",
+          "#e78888",
+          "#ecc0c0",
+          "#f8eded"
+        ]
+      },
+      "dawn-paper": {
+        "role": "neutral",
+        "displayName": "Dawn Paper",
+        "canonical": "#f5f7f9",
+        "tonalRamp": [
+          "#21262c",
+          "#36424e",
+          "#4a5e72",
+          "#5d7a98",
+          "#8399af",
+          "#aab8c5",
+          "#d0d6dc",
+          "#f1f2f4"
+        ]
+      },
+      "ink-slate": {
+        "role": "neutral",
+        "displayName": "Ink Slate",
+        "canonical": "#182022",
+        "tonalRamp": [
+          "#22292a",
+          "#3a474a",
+          "#51676c",
+          "#66878f",
+          "#8aa2a8",
+          "#afbdc1",
+          "#d2d9da",
+          "#f1f3f3"
+        ]
+      },
+      "card-white": {
+        "role": "neutral",
+        "displayName": "Card White",
+        "canonical": "#ffffff",
+        "tonalRamp": [
+          "#262626",
+          "#424242",
+          "#5e5e5e",
+          "#7a7a7a",
+          "#999999",
+          "#b8b8b8",
+          "#d6d6d6",
+          "#f2f2f2"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Page title only."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Result card heading."
+      },
+      "stat-numeral": {
+        "displayName": "Stat numeral",
+        "purpose": "Every result number, tabular, Purpose Teal."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Purpose message under the stats."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Fields, tagline, help text."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Uppercase unit labels on tiles and ticker."
+      }
+    },
+    "shadows": [],
+    "motion": [
+      {
+        "name": "button-feedback",
+        "value": "background .2s, filter .2s",
+        "purpose": "Button hover and press brightness."
+      },
+      {
+        "name": "result-scroll",
+        "value": "scrollIntoView smooth",
+        "purpose": "Bring the new result card into view; disabled under prefers-reduced-motion."
+      },
+      {
+        "name": "ticker",
+        "value": "1s interval",
+        "purpose": "Journey ticker updates once per second."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "ticker-compact",
+        "value": "520px"
+      },
+      {
+        "name": "mobile",
+        "value": "640px"
+      },
+      {
+        "name": "container",
+        "value": "720px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The single Calculate action.",
+      "html": "<button class=\"ds-btn-primary\">Calculate</button>",
+      "css": ".ds-btn-primary{background:var(--accent,#2fb8a4);color:#0f1214;border:none;padding:.85rem 1.2rem;font:600 1rem system-ui,sans-serif;border-radius:.65rem;cursor:pointer;transition:filter .2s}.ds-btn-primary:hover{filter:brightness(1.08)}.ds-btn-primary:active{filter:brightness(.93)}.ds-btn-primary:focus-visible{outline:2px solid var(--accent,#2fb8a4);outline-offset:2px}.ds-btn-primary[disabled]{opacity:.55;cursor:not-allowed}"
+    },
+    {
+      "name": "Input Field",
+      "kind": "input",
+      "refersTo": "input-field",
+      "description": "Labelled date or select field.",
+      "html": "<label class=\"ds-field\"><span>Birth Date</span><input class=\"ds-input\" type=\"date\"></label>",
+      "css": ".ds-field{display:grid;gap:.25rem;font:500 1rem system-ui,sans-serif;color:#f5f7f8}.ds-input{background:var(--panel,#1b2022);border:1px solid var(--border,#2a3032);border-radius:.55rem;padding:.65rem .8rem;color:#f5f7f8;font:400 1rem system-ui,sans-serif}.ds-input:focus-visible{outline:2px solid var(--accent,#2fb8a4);outline-offset:2px}"
+    },
+    {
+      "name": "Result Card",
+      "kind": "card",
+      "refersTo": "result-card",
+      "description": "Container for the answer; the only teal-framed surface.",
+      "html": "<div class=\"ds-result\"><h2>Your Purpose Days</h2><p>Approximate days for your journey, based on current averages.</p></div>",
+      "css": ".ds-result{display:grid;gap:.4rem;padding:1.75rem 1.6rem 1.9rem;background:#15191b;border:1px solid var(--accent,#2fb8a4);border-radius:1rem;color:#f5f7f8;font-family:system-ui,sans-serif}.ds-result h2{margin:0;font-size:2.15rem;line-height:1.15}.ds-result p{margin:0;opacity:.8;font-size:1.1rem}"
+    },
+    {
+      "name": "Stat Tile",
+      "kind": "custom",
+      "refersTo": "stat-tile",
+      "description": "One unit of the result: label, floor numeral, precise value.",
+      "html": "<div class=\"ds-stat\"><span class=\"ds-stat-l\">Days</span><span class=\"ds-stat-v\">7,786</span><span class=\"ds-stat-p\">precise: 7786.29</span></div>",
+      "css": ".ds-stat{display:grid;gap:.4rem;padding:.85rem;background:var(--panel,#1b2022);border:1px solid var(--border,#2a3032);border-radius:1.1rem;min-width:140px;font-family:system-ui,sans-serif;color:#f5f7f8}.ds-stat-l{font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;opacity:.65}.ds-stat-v{font-size:2.25rem;line-height:1;font-weight:600;color:var(--accent,#2fb8a4);font-variant-numeric:tabular-nums}.ds-stat-p{font-size:.72rem;opacity:.55}"
+    },
+    {
+      "name": "Journey Ticker",
+      "kind": "custom",
+      "refersTo": "journey-ticker",
+      "description": "Live years-to-seconds display in tabular numerals.",
+      "html": "<div class=\"ds-ticker\"><div><b>21</b><i>years</i></div><span>:</span><div><b>3</b><i>months</i></div><span>:</span><div><b>12</b><i>seconds</i></div></div>",
+      "css": ".ds-ticker{display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-end;gap:.35rem .5rem;padding:1rem .75rem .85rem;background:var(--panel,#1b2022);border:1px solid var(--border,#2a3032);border-radius:.9rem;font-family:system-ui,sans-serif;font-variant-numeric:tabular-nums}.ds-ticker div{display:grid;justify-items:center;gap:.2rem;min-width:3.2rem}.ds-ticker b{font-size:1.85rem;line-height:1;font-weight:600;color:var(--accent,#2fb8a4)}.ds-ticker i{font-style:normal;font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;opacity:.6;color:#f5f7f8}.ds-ticker span{font-size:1.6rem;color:var(--accent,#2fb8a4);opacity:.55;padding-bottom:1rem}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Morning Page",
+    "overview": "Days on Purpose should read like a journal opened at the start of a day: spare, quiet, and pointed at one intention. A single centred column holds three fields, one action, and one answer. Nothing competes with the number the visitor came for, and nothing in the frame suggests fear or urgency.\n\nThe incumbent page is dark by default (Night Field) and follows the operating system into a light scheme (Dawn Paper). One accent, Purpose Teal, marks what matters: the primary action, every result numeral, and focus. Surfaces are flat and separated by tone and hairline borders, never by shadow. Type is the platform's own system sans, so the page feels native and loads nothing.\n\nThe light scheme is only partly applied today: the result card, ticker, and total box stay dark when the rest of the page turns light. That is a known defect, not a design choice (see Do's and Don'ts).",
+    "keyCharacteristics": [
+      "One column, 720px maximum, mobile first.",
+      "One accent colour, used for action, numerals, and focus only.",
+      "Flat tonal layering; no shadows anywhere.",
+      "System sans throughout; numerals in tabular figures.",
+      "Calm, generous rounding that grows with the size of the surface."
+    ],
+    "rules": [
+      {
+        "name": "The One Voice Rule",
+        "body": "Purpose Teal is the only chromatic colour. It marks action, results, and focus, and nothing decorative.",
+        "section": "colors"
+      },
+      {
+        "name": "The Quiet Hierarchy Rule",
+        "body": "Secondary text is made quieter with opacity (0.55–0.85) on the base text colour, not with new greys.",
+        "section": "colors"
+      },
+      {
+        "name": "The Numerals Lead Rule",
+        "body": "Result numbers are always the largest, heaviest text on the card and always use tabular figures, so a live ticker never jitters.",
+        "section": "typography"
+      },
+      {
+        "name": "The No-Shadow Rule",
+        "body": "Surfaces separate by tone and hairline, never by drop shadow or glow.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** keep Purpose Teal as the only accent, reserved for action, numerals, and focus.",
+      "**Do** use tabular figures for every number that changes.",
+      "**Do** separate surfaces by tone and 1px hairlines.",
+      "**Do** keep the disclaimer and source footnote visible under every result.",
+      "**Do** make every surface follow the active colour scheme, including the result card and ticker."
+    ],
+    "donts": [
+      "**Don't** put white text on Purpose Teal: it measures about 2.5:1, below WCAG AA. Use Night Field text on the teal (about 7.6:1).",
+      "**Don't** use Purpose Teal for text on Dawn Paper or Card White without darkening it: it fails 3:1 even for large numerals.",
+      "**Don't** add shadows, gradients, or glows.",
+      "**Don't** label anything \"countdown\", \"remaining\", or \"left\"; the ticker is a journey, not a clock running out.",
+      "**Don't** add a second accent colour or decorative illustration to the calculator."
+    ]
+  }
+}
