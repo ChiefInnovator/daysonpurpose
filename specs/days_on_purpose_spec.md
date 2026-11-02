@@ -15,7 +15,7 @@ Create an application that helps users frame their lives around **purposeful act
 - A saved country code that is not in the dataset is ignored, and the default country is used instead.
 
 ## Computation (separate, transparent)
-- Today = system date in UTC.
+- Today = the current moment; the birth date is read as local midnight in the visitor's time zone, matching the date picker.
 - Age in **years** = precise fractional years (use **365.2425** days/year).
 - Life Expectancy (**LE_years**) from dataset.
 - **Remaining years** = `max(LE_years - age_years, 0)`.

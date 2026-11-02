@@ -12,6 +12,8 @@ test('parseCsv reads rows keyed by ISO2', () => {
 test('parseCsv rejects a bad header or value', () => {
   assert.throws(() => parseCsv('Country,Male\nJapan,81'));
   assert.throws(() => parseCsv(CSV.replace('81.09', 'x')));
+  assert.throws(() => parseCsv(CSV.replace('81.09', '')));
+  assert.throws(() => parseCsv(CSV.replace(',2023', '')));
 });
 
 test('lookup returns the gender value or null', () => {

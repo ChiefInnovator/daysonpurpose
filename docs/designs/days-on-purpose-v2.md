@@ -178,11 +178,15 @@ None.
 
 ### CUJ 4: Invalid input
 
-*   **Given**: An empty field, or a birth date after today.
-*   **When**: The visitor fills the form.
-*   **Then**: Calculate stays disabled until all three fields hold valid values.
-    The date picker does not offer dates after today. If any input changes
-    after a result, the result is cleared.
+*   **Given**: An empty birth date, or a birth date after today.
+*   **When**: The visitor presses Calculate.
+*   **Then**: An inline error under the form names the problem ("Enter your
+    birth date." or "Birth date cannot be in the future."), the date field is
+    marked `aria-invalid` and receives focus, and no result is shown. Calculate
+    is disabled only while the dataset loads. The date picker does not offer
+    dates after today. If any input changes after a result, the result is
+    cleared. (Changed from "disabled until valid" after the Impeccable critique
+    found that silent disabling gave no feedback.)
 
 ### CUJ 5: Light-mode visitor
 

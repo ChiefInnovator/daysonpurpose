@@ -7,7 +7,9 @@ export function parseCsv(text) {
   if (lines.shift() !== HEADER) throw new Error('Bad dataset');
   const rows = new Map();
   for (const line of lines) {
-    const [name, iso2, male, female, total, source, year] = line.split(',');
+    const parts = line.split(',');
+    if (parts.length !== 7 || parts.some(p => p.trim() === '')) throw new Error('Bad dataset');
+    const [name, iso2, male, female, total, source, year] = parts;
     const row = { name, iso2, male: Number(male), female: Number(female), total: Number(total), source, year: Number(year) };
     if (!name || !iso2 || ![row.male, row.female, row.total, row.year].every(Number.isFinite)) {
       throw new Error('Bad dataset');

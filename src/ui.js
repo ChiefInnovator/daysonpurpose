@@ -82,6 +82,7 @@ function setupJourney(endMs) {
   function pad(n) { return String(Math.max(0, n)).padStart(2, '0'); }
   tick = function () {
     let ms = Math.max(0, endMs - Date.now());
+    if (ms === 0) stopCountdown();
     totalSecondsEl.textContent = Math.floor(ms / SEC).toLocaleString();
     const y = Math.floor(ms / YEAR); ms -= y * YEAR;
     const mo = Math.floor(ms / MONTH); ms -= mo * MONTH;
@@ -98,7 +99,7 @@ function setupJourney(endMs) {
     cells.minutes.textContent = pad(mi);
     cells.seconds.textContent = pad(s);
   };
-  const play = () => { stopCountdown(); tick(); countdownTimer = setInterval(tick, 1000); toggle.textContent = 'Pause'; toggle.setAttribute('aria-pressed', 'false'); };
+  const play = () => { stopCountdown(); tick(); if (endMs > Date.now()) countdownTimer = setInterval(tick, 1000); toggle.textContent = 'Pause'; toggle.setAttribute('aria-pressed', 'false'); };
   const pause = () => { stopCountdown(); toggle.textContent = 'Play'; toggle.setAttribute('aria-pressed', 'true'); };
   toggle.addEventListener('click', () => (countdownTimer ? pause() : play()));
   tick();
@@ -130,7 +131,7 @@ function renderResult(r, info, gender) {
   resultRegion.innerHTML = '';
   const container = document.createElement('div');
   container.className = 'result-card';
-  const note = `<p class="note">Based on life expectancy at birth for ${escapeHtml(info.country)} (${escapeHtml(gender)}): ${info.years.toFixed(1)} years. Source: UN World Population Prospects 2024 (${escapeHtml(info.year)} estimate).</p>`;
+  const note = `<p class="note">Based on life expectancy at birth for ${escapeHtml(info.country)} (${escapeHtml(gender)}): ${info.years.toFixed(1)} years. Source: UN World Population Prospects 2024 (${escapeHtml(info.year)} estimate). Statistical estimate, not an individual prediction.</p>`;
   if (r.status === 'ok') {
     const days = r.journey.days_floor.toLocaleString();
     container.innerHTML = `
