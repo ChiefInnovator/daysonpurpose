@@ -11,6 +11,7 @@ const calcBtn = document.getElementById('calc-btn');
 const resultRegion = document.getElementById('result-region');
 const errorEl = document.getElementById('error');
 const summary = document.querySelector('.form-summary');
+const intro = summary.closest('.intro');
 const summaryText = document.getElementById('summary-text');
 const editBtn = document.getElementById('edit-btn');
 const EMPTY_RESULT = resultRegion.innerHTML;
@@ -73,6 +74,7 @@ function clearResult() {
 function expandForm() {
   form.hidden = false;
   summary.hidden = true;
+  intro.classList.remove('collapsed');
 }
 
 function collapseForm() {
@@ -83,6 +85,7 @@ function collapseForm() {
   summaryText.textContent = `${date} · ${country} · ${gender}`;
   form.hidden = true;
   summary.hidden = false;
+  intro.classList.add('collapsed');
 }
 
 const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
