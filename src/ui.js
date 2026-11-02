@@ -10,6 +10,12 @@ const genderSelect = document.getElementById('gender');
 const calcBtn = document.getElementById('calc-btn');
 const resultRegion = document.getElementById('result-region');
 const errorEl = document.getElementById('error');
+const summary = document.querySelector('.form-summary');
+const intro = summary.closest('.intro');
+const summaryText = document.getElementById('summary-text');
+const editBtn = document.getElementById('edit-btn');
+const EMPTY_RESULT = resultRegion.innerHTML;
+const narrow = window.matchMedia('(max-width: 879px)');
 
 export function escapeHtml(value) {
   return String(value).replace(/[&<>"']/g, ch => {
@@ -62,7 +68,24 @@ function stopCountdown() {
 function clearResult() {
   stopCountdown();
   tick = null;
-  resultRegion.innerHTML = '';
+  resultRegion.innerHTML = EMPTY_RESULT;
+}
+
+function expandForm() {
+  form.hidden = false;
+  summary.hidden = true;
+  intro.classList.remove('collapsed');
+}
+
+function collapseForm() {
+  const [y, m, d] = birthInput.value.split('-').map(Number);
+  const date = new Date(y, m - 1, d).toLocaleDateString(undefined, { dateStyle: 'medium' });
+  const country = countryInput.options[countryInput.selectedIndex]?.textContent ?? '';
+  const gender = genderSelect.options[genderSelect.selectedIndex]?.textContent ?? '';
+  summaryText.textContent = `${date} · ${country} · ${gender}`;
+  form.hidden = true;
+  summary.hidden = false;
+  intro.classList.add('collapsed');
 }
 
 const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -107,8 +130,9 @@ function setupJourney(endMs) {
 }
 
 function journeyHtml() {
-  const cells = ['years', 'months', 'weeks', 'days', 'hours', 'minutes', 'seconds'].map(lbl =>
-    `<div class="jr-cell"><span class="jr-val" data-cd="${lbl}">--</span><span class="jr-lbl">${lbl}</span></div>`).join('');
+  const short = { years: 'yrs', months: 'mos', weeks: 'wks', days: 'days', hours: 'hrs', minutes: 'min', seconds: 'sec' };
+  const cells = Object.keys(short).map(lbl =>
+    `<div class="jr-cell"><span class="jr-val" data-cd="${lbl}">--</span><span class="jr-lbl" data-short="${short[lbl]}">${lbl}</span></div>`).join('');
   return `
       <section class="journey" id="journey" aria-label="Your journey, live">
         <div class="jr-row" role="timer" aria-live="off">${cells}</div>
@@ -155,8 +179,11 @@ function renderResult(r, info, gender) {
   }
   resultRegion.appendChild(container);
   if (r.status === 'ok') setupJourney(r.end_timestamp_ms);
-  container.scrollIntoView({ behavior: reduceMotion() ? 'auto' : 'smooth', block: 'start' });
-  resultRegion.focus();
+  if (narrow.matches) {
+    collapseForm();
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }
+  resultRegion.focus({ preventScroll: true });
 }
 
 async function share(button, days) {
@@ -211,6 +238,12 @@ export function initUi(dataset) {
   [birthInput, countryInput, genderSelect].forEach(el => {
     el.addEventListener('input', onChange);
     el.addEventListener('change', onChange);
+  });
+
+  editBtn.addEventListener('click', () => { expandForm(); birthInput.focus(); });
+  narrow.addEventListener('change', e => {
+    if (!e.matches) expandForm();
+    else if (resultRegion.querySelector('.result-card')) collapseForm();
   });
 
   form.addEventListener('submit', e => {
