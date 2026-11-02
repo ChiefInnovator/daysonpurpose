@@ -258,11 +258,16 @@ Each scheme sets the same ten CSS custom properties on the page root. The dark v
 
 ## Layout
 
-A single centred column, max 720px wide, with 1rem side and top padding and 2.25rem at the bottom. The header sits 1.1rem above the form. The form is a vertical grid with 0.85rem gaps and 1.4rem below it; each field stacks its label over the control with 0.25rem between.
+**The One Screen Rule.** The form and the answer share one screen. A visitor never scrolls to see the number they just asked for.
 
-The result card is a vertical grid with 1.25rem gaps and padding of 1.9rem top, 1.6rem sides, 1.75rem bottom (1.6rem, 1.2rem, 1.5rem under 640px). The hero figure and its unit share a wrapping baseline row. The units row and the journey each start with 1.1rem of padding above a hairline. Units wrap in a flex row (0.75rem by 1.75rem gaps), each with the value above its label. Journey cells wrap with 0.5rem by 1rem gaps and a minimum width of 2.6rem; the total line and the Pause/Play toggle share a footer row that wraps on narrow screens. The footer sits 2rem below the main column.
+The page is a grid with three areas: intro (header and form), result, and footer.
 
-The one breakpoint is 640px. When a result renders, the card scrolls into view (instantly under reduced motion) and the result region takes focus.
+- **Wide (880px and up):** two columns inside a 1120px container, form column 300–360px and result column filling the rest, 3.5rem apart, vertically centred in a full-height (100dvh) frame with 1.5rem/2rem padding. The footer spans both columns at the bottom. Before a calculation, the result column holds a dashed-hairline placeholder ("Your purpose days will appear here.") so the layout does not jump. Focus moves to the result without scrolling.
+- **Narrow (below 880px):** one 720px column, 1rem padding, areas stacked intro → result → footer with 1.4rem gaps. After Calculate, the form collapses into a one-line summary (date · country · gender) with an Edit button between hairlines, the tagline hides, and the page returns to the top so the card fits a 390×844 phone. Edit restores the form and focuses the birth date. Widening past 880px restores the form automatically.
+
+The form is a vertical grid with 0.85rem gaps; each field stacks its label over the control with 0.25rem between. The header sits 1.1rem above the form (0.6rem when collapsed).
+
+The result card is a vertical grid with 1.25rem gaps and padding of 1.9rem top, 1.6rem sides, 1.75rem bottom (1.35/1.15/1.25rem and 1rem gaps below 880px). The hero figure and its unit share a wrapping baseline row. The units row and the journey each start with padding above a hairline. On wide screens units wrap in a flex row (0.75rem by 1.75rem gaps) and journey cells wrap with 0.5rem by 1rem gaps; below 880px both become single rows of equal columns (5 and 7), and journey labels shorten (yrs, mos, wks, days, hrs, min, sec). The total line and the Pause/Play toggle share a footer row.
 
 ## Elevation & Depth
 
