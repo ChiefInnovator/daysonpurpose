@@ -108,8 +108,8 @@
   .result-empty { display:none; }
   .form-summary { display:flex; align-items:center; justify-content:space-between; gap:1rem; padding:.75rem 0; border-block:1px solid var(--hairline); }
   .form-summary[hidden] { display:none; }
-  .form-summary p { margin:0; font-weight:500; }
-  .edit-btn { background:transparent; color:var(--text); border:1px solid var(--field-border); border-radius:.55rem; padding:.45rem .85rem; font-size:.9rem; cursor:pointer; }
+  .form-summary p { margin:0; font-weight:500; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .edit-btn { background:transparent; color:var(--text); border:1px solid var(--field-border); border-radius:.55rem; padding:.45rem .85rem; font-size:.9rem; cursor:pointer; flex:none; }
   .edit-btn:hover { border-color:var(--accent); }
   @media (min-width:880px) {
     .app { max-width:1120px; min-height:100dvh; padding:1.5rem 2rem 1rem; column-gap:3.5rem; row-gap:1rem; grid-template-columns:minmax(300px,360px) minmax(0,1fr); grid-template-rows:1fr auto; grid-template-areas:"intro result" "foot foot"; align-items:center; }

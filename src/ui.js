@@ -238,7 +238,10 @@ export function initUi(dataset) {
   });
 
   editBtn.addEventListener('click', () => { expandForm(); birthInput.focus(); });
-  narrow.addEventListener('change', e => { if (!e.matches) expandForm(); });
+  narrow.addEventListener('change', e => {
+    if (!e.matches) expandForm();
+    else if (resultRegion.querySelector('.result-card')) collapseForm();
+  });
 
   form.addEventListener('submit', e => {
     e.preventDefault();
