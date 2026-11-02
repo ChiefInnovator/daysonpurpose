@@ -1,0 +1,25 @@
+name: branch-policy
+
+on:
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  source-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Enforce allowed source branch
+        env:
+          BASE: ${{ github.base_ref }}
+          HEAD: ${{ github.head_ref }}
+        run: |
+          case "$BASE" in
+            main)
+              [ "$HEAD" = "develop" ] || { echo "::error::main only accepts PRs from develop (got '$HEAD')"; exit 1; } ;;
+            develop)
+              case "$HEAD" in
+                feature/*) ;;
+                *) echo "::error::develop only accepts PRs from feature/* branches (got '$HEAD')"; exit 1 ;;
+              esac ;;
+          esac
+          echo "OK: $HEAD -> $BASE"
