@@ -7,22 +7,21 @@ Days on Purpose is a free, browser-based life expectancy calculator that reframe
 ## How It Works
 
 1. Enter your **birth date**, **country**, and **gender**.
-2. The app looks up the latest life expectancy at birth (WHO/World Bank data, 190+ countries).
+2. The app looks up life expectancy at birth (UN World Population Prospects 2024, 2023 estimates, 237 countries and areas).
 3. It calculates your approximate remaining **days, weeks, months, and years** independently using 365.2425 days/year.
 4. Results are presented with a positive, purpose-centric message encouraging daily intentional action.
 
 ## Key Facts
 
 - **No backend** — all computation runs in the browser.
-- **Data source**: WHO/World Bank life expectancy at birth by country and gender (2023).
-- **Fallbacks**: If country+gender is unavailable, falls back to country total, then global average.
+- **Data source**: UN World Population Prospects 2024, life expectancy at birth by country and sex (2023 estimates).
 - **Privacy**: No data is sent to any server. Birth date and preferences are stored in Local Storage only.
 - **Free**: No cost, no sign-up.
 
 ## Inputs
 
 - `birth_date`: ISO date (YYYY-MM-DD)
-- `country`: One of 190+ supported countries (auto-detected via IP geolocation)
+- `country`: One of 237 supported countries and areas (suggested from browser language)
 - `gender`: female or male
 
 ## Outputs
@@ -47,8 +46,8 @@ Richard Crane
 
 ## URL
 
-https://daysonpurpose.com/
+https://chiefinnovator.github.io/daysonpurpose/
 
 ## Docs
 
-- [Specification](https://daysonpurpose.com/specs/days_on_purpose_spec.md)
+- [Specification](https://chiefinnovator.github.io/daysonpurpose/specs/days_on_purpose_spec.md)
