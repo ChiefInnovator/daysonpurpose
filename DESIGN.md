@@ -3,89 +3,162 @@ name: Days on Purpose
 description: Turn time into meaningful action.
 colors:
   purpose-teal: "#2fb8a4"
+  purpose-teal-deep: "#177a6c"
   night-field: "#0f1214"
   result-slate: "#15191b"
   panel-slate: "#1b2022"
-  hover-slate: "#222a2c"
   hairline-slate: "#2a3032"
+  field-pewter: "#667377"
   page-white: "#f5f7f8"
+  mist-grey: "#a3adb0"
   soft-coral: "#f87171"
   dawn-paper: "#f5f7f9"
-  ink-slate: "#182022"
   card-white: "#ffffff"
+  dawn-panel: "#eef2f3"
+  dawn-hairline: "#d5dcde"
+  dawn-pewter: "#7d8a8e"
+  ink-slate: "#182022"
+  quiet-slate: "#4f5b5f"
+  brick-red: "#b42318"
 typography:
-  display:
-    fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, 'Helvetica Neue', Arial, sans-serif"
-    fontSize: "clamp(1.9rem, 4vw, 2.6rem)"
+  hero-numeral:
+    fontSize: "clamp(3.5rem, 15vw, 5.5rem)"
     fontWeight: 700
-    lineHeight: 1.2
+    lineHeight: 1
+    letterSpacing: "-0.02em"
+    fontFeature: "tnum"
   headline:
-    fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, 'Helvetica Neue', Arial, sans-serif"
-    fontSize: "2.15rem"
+    fontSize: "clamp(2rem, 7vw, 2.75rem)"
     fontWeight: 700
     lineHeight: 1.15
-  stat-numeral:
-    fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, 'Helvetica Neue', Arial, sans-serif"
-    fontSize: "2.25rem"
-    fontWeight: 600
-    lineHeight: 1
-    letterSpacing: "0.5px"
-    fontFeature: "tnum"
+  display:
+    fontSize: "clamp(1.9rem, 4vw, 2.6rem)"
+    fontWeight: 700
+    lineHeight: 1.5
   title:
     fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, 'Helvetica Neue', Arial, sans-serif"
+    fontSize: "1.5rem"
+    fontWeight: 600
+    lineHeight: 1.3
+  title-compact:
+    fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, 'Helvetica Neue', Arial, sans-serif"
+    fontSize: "1.3rem"
+    fontWeight: 600
+    lineHeight: 1.3
+  unit-figure:
+    fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, 'Helvetica Neue', Arial, sans-serif"
     fontSize: "1.25rem"
+    fontWeight: 600
+    lineHeight: 1.5
+    fontFeature: "tnum"
+  ticker-figure:
+    fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, 'Helvetica Neue', Arial, sans-serif"
+    fontSize: "1.1rem"
+    fontWeight: 600
+    lineHeight: 1.1
+    fontFeature: "tnum"
+  lead:
+    fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, 'Helvetica Neue', Arial, sans-serif"
+    fontSize: "1.05rem"
     fontWeight: 400
-    lineHeight: 1.35
+    lineHeight: 1.5
   body:
     fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, 'Helvetica Neue', Arial, sans-serif"
     fontSize: "1rem"
     fontWeight: 400
     lineHeight: 1.5
+  body-small:
+    fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, 'Helvetica Neue', Arial, sans-serif"
+    fontSize: "0.9rem"
+    fontWeight: 400
+    lineHeight: 1.5
+  caption:
+    fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, 'Helvetica Neue', Arial, sans-serif"
+    fontSize: "0.85rem"
+    fontWeight: 400
+    lineHeight: 1.5
+    fontFeature: "tnum"
   label:
+    fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, 'Helvetica Neue', Arial, sans-serif"
+    fontSize: "0.8rem"
+    fontWeight: 400
+    lineHeight: 1.4
+  micro-label:
     fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, 'Helvetica Neue', Arial, sans-serif"
     fontSize: "0.72rem"
     fontWeight: 400
-    lineHeight: 1.35
-    letterSpacing: "0.05em"
+    lineHeight: 1.5
 rounded:
-  field: "0.55rem"
+  control: "0.55rem"
   button: "0.65rem"
-  inset: "0.9rem"
   card: "1rem"
-  tile: "1.1rem"
 spacing:
   xs: "0.25rem"
   sm: "0.5rem"
-  md: "0.85rem"
-  lg: "1.25rem"
-  xl: "1.4rem"
+  md: "0.75rem"
+  form: "0.85rem"
   page: "1rem"
+  divider: "1.1rem"
+  card-gap: "1.25rem"
+  section: "1.4rem"
+  card-inline: "1.6rem"
+  card-block: "1.75rem"
 components:
   button-primary:
     backgroundColor: "{colors.purpose-teal}"
-    textColor: "{colors.card-white}"
+    textColor: "{colors.night-field}"
+    typography: "{typography.body}"
     rounded: "{rounded.button}"
     padding: "0.85rem 1.2rem"
+  button-primary-light:
+    backgroundColor: "{colors.purpose-teal-deep}"
+    textColor: "{colors.card-white}"
+    typography: "{typography.body}"
+    rounded: "{rounded.button}"
+    padding: "0.85rem 1.2rem"
+  button-primary-loading:
+    backgroundColor: "{colors.panel-slate}"
+    textColor: "{colors.mist-grey}"
+    rounded: "{rounded.button}"
+    padding: "0.85rem 1.2rem"
+  button-secondary:
+    textColor: "{colors.page-white}"
+    typography: "{typography.body}"
+    rounded: "{rounded.control}"
+    padding: "0.7rem 1.1rem"
+  button-secondary-compact:
+    textColor: "{colors.page-white}"
+    typography: "{typography.body-small}"
+    rounded: "{rounded.control}"
+    padding: "0.45rem 0.85rem"
   input-field:
     backgroundColor: "{colors.panel-slate}"
     textColor: "{colors.page-white}"
-    rounded: "{rounded.field}"
+    typography: "{typography.body}"
+    rounded: "{rounded.control}"
+    padding: "0.65rem 0.8rem"
+  input-field-light:
+    backgroundColor: "{colors.dawn-panel}"
+    textColor: "{colors.ink-slate}"
+    typography: "{typography.body}"
+    rounded: "{rounded.control}"
     padding: "0.65rem 0.8rem"
   result-card:
     backgroundColor: "{colors.result-slate}"
+    textColor: "{colors.page-white}"
     rounded: "{rounded.card}"
-    padding: "1.75rem 1.6rem 1.9rem"
-  stat-tile:
-    backgroundColor: "{colors.panel-slate}"
+    padding: "1.9rem 1.6rem 1.75rem"
+  result-card-light:
+    backgroundColor: "{colors.card-white}"
+    textColor: "{colors.ink-slate}"
+    rounded: "{rounded.card}"
+    padding: "1.9rem 1.6rem 1.75rem"
+  hero-figure:
     textColor: "{colors.purpose-teal}"
-    typography: "{typography.stat-numeral}"
-    rounded: "{rounded.tile}"
-    padding: "0.85rem"
-  journey-ticker:
-    backgroundColor: "{colors.panel-slate}"
-    textColor: "{colors.purpose-teal}"
-    rounded: "{rounded.inset}"
-    padding: "1rem 0.75rem 0.85rem"
+    typography: "{typography.hero-numeral}"
+  hero-figure-light:
+    textColor: "{colors.purpose-teal-deep}"
+    typography: "{typography.hero-numeral}"
 ---
 
 # Design System: Days on Purpose
@@ -94,118 +167,158 @@ components:
 
 **Creative North Star: "The Morning Page"**
 
-Days on Purpose should read like a journal opened at the start of a day: spare, quiet, and pointed at one intention. A single centred column holds three fields, one action, and one answer. Nothing competes with the number the visitor came for, and nothing in the frame suggests fear or urgency.
+Days on Purpose reads like a journal opened at the start of a day: spare, quiet, and pointed at one intention. A single centred column holds three fields, one action, and one answer. The answer is a single large figure, the visitor's purpose days, followed by one question to act on today. Everything else on the result card (the other units, the live journey, sharing, the source note) sits beneath that figure in plain text separated by hairlines.
 
-The incumbent page is dark by default (Night Field) and follows the operating system into a light scheme (Dawn Paper). One accent, Purpose Teal, marks what matters: the primary action, every result numeral, and focus. Surfaces are flat and separated by tone and hairline borders, never by shadow. Type is the platform's own system sans, so the page feels native and loads nothing.
+The page is dark by default (Night Field) and follows the operating system into a light scheme (Dawn Paper). Both schemes share one set of ten role tokens, so every surface, including the result card and the ticker, changes with the scheme. One accent, Purpose Teal, marks what matters: the primary action, the hero figure, the result frame, focus, and selection. The light scheme uses a deeper teal so the accent holds contrast on paper.
 
-The light scheme is only partly applied today: the result card, ticker, and total box stay dark when the rest of the page turns light. That is a known defect, not a design choice (see Do's and Don'ts).
+Depth is tonal and flat. There are no shadows, gradients, glows, or illustrations. The result card no longer boxes its parts into tiles or insets; its sections are divided by 1px hairlines and carried by type weight and size.
 
 **Key Characteristics:**
-- One column, 720px maximum, mobile first.
-- One accent colour, used for action, numerals, and focus only.
-- Flat tonal layering; no shadows anywhere.
-- System sans throughout; numerals in tabular figures.
-- Calm, generous rounding that grows with the size of the surface.
+- One centred 720px column; three fields, one button, one result card.
+- One accent per scheme, reserved for action, the hero figure, the result frame, and focus.
+- A single hero figure leads the result; supporting numbers are plain text in tabular figures.
+- Sections inside the result card are divided by hairlines, not boxed.
+- Two complete colour schemes driven by the same role tokens.
 
 ## Colors
 
-A near-black slate field with one clear teal, and a pale paper scheme for light mode.
+A cool slate neutral field with a single teal accent, mirrored into a light paper scheme.
+
+Each scheme sets the same ten CSS custom properties on the page root. The dark values are the default; the light values apply under `prefers-color-scheme: light`.
+
+| Role (custom property) | Dark scheme | Light scheme |
+|---|---|---|
+| `--accent` | Purpose Teal | Deep Purpose Teal |
+| `--on-accent` | Night Field | Card White |
+| `--bg` | Night Field | Dawn Paper |
+| `--card` | Result Slate | Card White |
+| `--panel` | Panel Slate | Dawn Panel |
+| `--hairline` | Hairline Slate | Dawn Hairline |
+| `--field-border` | Field Pewter | Dawn Pewter |
+| `--text` | Page White | Ink Slate |
+| `--muted` | Mist Grey | Quiet Slate |
+| `--danger` | Soft Coral | Brick Red |
 
 ### Primary
-- **Purpose Teal** (`purpose-teal`): the only accent. Fills the Calculate button; colours every stat numeral, ticker digit, and separator; draws the result-card border and all focus outlines.
+- **Purpose Teal** (purpose-teal): the dark-scheme accent. Fills the Calculate button, colours the hero figure, frames the result card, draws focus outlines, and tints the caret, native control accents, and text selection.
+- **Deep Purpose Teal** (purpose-teal-deep): the light-scheme accent, in exactly the same roles. It holds about 5:1 against Card White, so white text sits on it and it works as text on paper.
 
 ### Neutral
-- **Night Field** (`night-field`): dark-scheme page background.
-- **Result Slate** (`result-slate`): the result card's inner surface, one step lighter than the field.
-- **Panel Slate** (`panel-slate`): inputs, stat tiles, ticker, and total box.
-- **Hover Slate** (`hover-slate`): hover and focus fill for list suggestions (currently unused; the suggestion list was removed).
-- **Hairline Slate** (`hairline-slate`): 1px borders on inputs, tiles, and insets.
-- **Page White** (`page-white`): dark-scheme text.
-- **Dawn Paper** (`dawn-paper`): light-scheme page background.
-- **Ink Slate** (`ink-slate`): light-scheme text.
-- **Card White** (`card-white`): light-scheme inputs and stat tiles; current button text.
+- **Night Field** (night-field): the dark page background, and the text colour on Purpose Teal (about 7.6:1).
+- **Result Slate** (result-slate): the dark result card surface, one step up from the page.
+- **Panel Slate** (panel-slate): dark field fills, and the Calculate button while the dataset loads.
+- **Hairline Slate** (hairline-slate): dark 1px dividers between result-card sections. Decorative only; never the sole edge of a control.
+- **Field Pewter** (field-pewter): dark 1px borders on fields and secondary buttons, at 3:1 or better against every dark surface.
+- **Page White** (page-white): dark-scheme primary text.
+- **Mist Grey** (mist-grey): dark-scheme secondary text: tagline, form help, unit and ticker labels, the total-seconds line, the source note, and the footer.
+- **Dawn Paper** (dawn-paper): the light page background.
+- **Card White** (card-white): the light result card, and the text colour on Deep Purpose Teal.
+- **Dawn Panel** (dawn-panel): light field fills and the loading button.
+- **Dawn Hairline** (dawn-hairline): light 1px section dividers. Decorative only.
+- **Dawn Pewter** (dawn-pewter): light 1px borders on fields and secondary buttons, at 3:1 or better.
+- **Ink Slate** (ink-slate): light-scheme primary text.
+- **Quiet Slate** (quiet-slate): light-scheme secondary text, in the same roles as Mist Grey.
 
-### Semantic
-- **Soft Coral** (`soft-coral`): inline error text.
+### Error
+- **Soft Coral** (soft-coral): the dark-scheme error line under the fields.
+- **Brick Red** (brick-red): the light-scheme error line.
 
 ### Named Rules
-**The One Voice Rule.** Purpose Teal is the only chromatic colour. It marks action, results, and focus, and nothing decorative.
+**The One Accent Rule.** Each scheme has exactly one chromatic colour, its teal. It marks action, the hero figure, the result frame, and focus, and nothing decorative.
 
-**The Quiet Hierarchy Rule.** Secondary text is made quieter with opacity (0.55–0.85) on the base text colour, not with new greys.
+**The Paired Scheme Rule.** Every colour is applied through a role token that exists in both schemes. A surface never hard-codes a hex value, so nothing is left behind when the scheme flips.
+
+**The Quiet Hierarchy Rule.** Secondary text uses the muted token (Mist Grey or Quiet Slate), never opacity on the primary text colour.
 
 ## Typography
 
-**Display Font:** system-ui (with -apple-system, Segoe UI, Roboto, Ubuntu, Helvetica Neue, Arial, sans-serif)
-**Body Font:** the same system stack
+**Body Font:** system-ui (with -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Ubuntu, Helvetica Neue, Arial, sans-serif)
+**Display Font:** not yet chosen. The build currently renders the display roles (hero numeral, headline, display) in the body system stack. That is a known gap, not a rule for new surfaces.
 
-**Character:** One native sans in a few weights. The numerals carry the personality; the words stay plain.
+**Character:** Plain, native text with weight doing the work. The hero figure carries the personality; the words around it stay calm.
 
 ### Hierarchy
-- **Display** (700, clamp(1.9rem, 4vw, 2.6rem)): the page title "Days on Purpose".
-- **Headline** (700, 2.15rem, 1.15; 1.75rem under 640px): "Your Purpose Days" on the result card.
-- **Stat numeral** (600, 2.25rem, 1, tabular; ticker 1.85rem, total 2.1rem): every result number, in Purpose Teal.
-- **Title** (400, 1.25rem, 1.35, max 60ch): the purpose message under the stats.
-- **Body** (400, 1rem, 1.5): fields, tagline (1.05rem), form help (0.9rem).
-- **Label** (400, 0.72rem, 0.05em, uppercase): stat and ticker unit labels; ticker labels use 0.6rem with 0.08em.
+- **Hero numeral** (700, clamp 3.5rem to 5.5rem, line-height 1, -0.02em, tabular figures): the purpose-days figure only, in the accent colour.
+- **Headline** (700, clamp 2rem to 2.75rem, 1.15, balanced wrap): the "surpassed the average" heading that replaces the hero figure for visitors past the average.
+- **Display** (700, clamp 1.9rem to 2.6rem): the page title.
+- **Title** (600, 1.5rem, 1.3, max 30ch, balanced wrap): the reflection question on the result card and the "purpose days" unit beside the hero figure. Under 640px the question drops to **Title compact** (600, 1.3rem).
+- **Unit figure** (600, 1.25rem, tabular figures): the weeks, months, years, and block values.
+- **Ticker figure** (600, 1.1rem, 1.1, tabular figures): the live journey cells.
+- **Lead** (400, 1.05rem): the tagline under the page title.
+- **Body** (400, 1rem, 1.5): field text, the sub-line under the hero figure (max 60ch), the Calculate and Share buttons. Field labels use 500.
+- **Body small** (400, 0.9rem): form help, the error line, and the Pause/Play toggle.
+- **Caption** (400, 0.85rem, tabular figures): the "seconds to invest" total.
+- **Label** (400, 0.8rem): unit labels, the source note (line-height 1.4), and the footer.
+- **Micro label** (400, 0.72rem): the lowercase ticker labels under each cell.
 
 ### Named Rules
-**The Numerals Lead Rule.** Result numbers are always the largest, heaviest text on the card and always use tabular figures, so a live ticker never jitters.
+**The One Figure Rule.** The purpose-days figure is the only text at hero size on the result card. Every other number steps down to unit or ticker size.
+
+**The Steady Digits Rule.** Every number that changes or lines up with others uses tabular figures, so the live ticker never jitters.
 
 ## Layout
 
-A single centred column (max-width 720px, 1rem side padding, 2.25rem bottom). The form is a vertical grid with 0.85rem gaps; each field stacks label over control with 0.25rem between. The result card is a grid with 1.4rem gaps. Stat tiles flow in an auto-fit grid (min 170px; 140px under 640px) with 1.25rem gaps (1rem under 640px). The ticker wraps cells with separators and shrinks its digits under 520px. The result card scrolls into view and takes focus when a result renders.
+A single centred column, max 720px wide, with 1rem side and top padding and 2.25rem at the bottom. The header sits 1.1rem above the form. The form is a vertical grid with 0.85rem gaps and 1.4rem below it; each field stacks its label over the control with 0.25rem between.
+
+The result card is a vertical grid with 1.25rem gaps and padding of 1.9rem top, 1.6rem sides, 1.75rem bottom (1.6rem, 1.2rem, 1.5rem under 640px). The hero figure and its unit share a wrapping baseline row. The units row and the journey each start with 1.1rem of padding above a hairline. Units wrap in a flex row (0.75rem by 1.75rem gaps), each with the value above its label. Journey cells wrap with 0.5rem by 1rem gaps and a minimum width of 2.6rem; the total line and the Pause/Play toggle share a footer row that wraps on narrow screens. The footer sits 2rem below the main column.
+
+The one breakpoint is 640px. When a result renders, the card scrolls into view (instantly under reduced motion) and the result region takes focus.
 
 ## Elevation & Depth
 
-Flat. There are no shadows. Depth comes from three tonal steps (Night Field → Result Slate → Panel Slate) and 1px Hairline Slate borders. The result card alone gets a 1px Purpose Teal border, which is the page's only emphasis frame.
+Flat. There are no shadows. Depth comes from tonal steps (page, then card, then field fill) and 1px lines: hairlines between sections, pewter borders on controls, and a single accent border around the result card, which is the page's only emphasis frame.
 
 ### Named Rules
-**The No-Shadow Rule.** Surfaces separate by tone and hairline, never by drop shadow or glow.
+**The No-Shadow Rule.** Surfaces separate by tone and 1px lines, never by drop shadow or glow.
 
 ## Shapes
 
-Soft, rounded rectangles throughout, with radius growing as the surface grows: fields 0.55rem, button 0.65rem, ticker and total insets 0.9rem, result card 1rem, stat tiles 1.1rem. No sharp corners, no pills, no circles.
+Soft, rounded rectangles, with radius growing as the surface grows: fields and secondary buttons at 0.55rem, the Calculate button at 0.65rem, the result card at 1rem. The result region's focus ring follows the card's 1rem corner. There are no sharp corners, pills, or circles.
 
 ## Components
 
 ### Buttons
-Calm and confident: one full-strength action per screen.
-- **Shape:** gently rounded (0.65rem).
-- **Primary:** Purpose Teal fill, 600 weight, 1rem, 0.85rem × 1.2rem padding, no border.
-- **Hover / Focus:** brightness 1.08 on hover, 0.93 on press; 2px Purpose Teal outline offset 2px on focus.
-- **Disabled:** 55% opacity, not-allowed cursor; the button stays disabled until all fields are valid.
-
-### Cards / Containers
-- **Corner Style:** 1rem on the result card; 1.1rem on stat tiles; 0.9rem on ticker insets.
-- **Background:** Result Slate for the card; Panel Slate for tiles and insets.
-- **Shadow Strategy:** none (see Elevation & Depth).
-- **Border:** 1px Purpose Teal on the result card; 1px Hairline Slate on tiles and insets.
-- **Internal Padding:** card 1.75rem/1.6rem; tiles 0.85rem; insets 1rem/0.75rem.
+Calm and confident: one full-strength action per screen, with everything else drawn in outline.
+- **Shape:** gently rounded (0.65rem primary, 0.55rem secondary).
+- **Primary (Calculate):** accent fill with on-accent text, 600 weight, 1rem, 0.85rem by 1.2rem padding, no border.
+- **Hover / Press / Focus:** brightness 1.08 on hover and 0.93 on press, with a 0.2s transition; 2px accent outline at 2px offset on focus.
+- **Loading:** while the dataset loads the button is disabled, filled with the panel colour and muted text, and shows a progress cursor.
+- **Secondary (Share):** transparent fill, primary-text colour, 1px field border, 600 weight, 1rem, 0.7rem by 1.1rem padding. The border turns accent on hover. After sharing, the label briefly confirms ("Link copied") and then returns.
+- **Compact secondary (Pause/Play):** the same outline treatment at 0.9rem and 400 weight, 0.45rem by 0.85rem padding.
 
 ### Inputs / Fields
-- **Style:** Panel Slate fill (Card White in light mode), 1px Hairline Slate border, 0.55rem radius, 1rem text.
-- **Focus:** 2px Purpose Teal outline, 2px offset.
-- **Error:** a single Soft Coral alert line under the fields (`role="alert"`).
-- **Date picker:** the native calendar icon is inverted to white in dark mode.
+- **Style:** panel fill, 1px field border, 0.55rem radius, 0.65rem by 0.8rem padding, 1rem text. Native date and select controls, tinted with the accent for caret and accent colour.
+- **Focus:** 2px accent outline at 2px offset.
+- **Error:** a single error-colour line at 0.9rem under the fields (`role="alert"`); the date field is marked invalid and takes focus.
 
-### Stat Tile (signature)
-A small Panel Slate tile: uppercase unit label, a large Purpose Teal numeral (the floor value), and a quiet "precise" line with two decimals. Six tiles: days, weeks, months, years, 40-day blocks, 100-day blocks.
+### Result Card (signature)
+- **Corner Style:** 1rem.
+- **Background:** the card colour (Result Slate or Card White).
+- **Border:** 1px accent.
+- **Shadow Strategy:** none (see Elevation & Depth).
+- **Order:** hero figure with its unit, a muted sub-line, the reflection question, the units row, the journey, the Share button, and the source note. For visitors past the average, a headline replaces the figure and the units and journey are omitted.
+
+### Units Row
+A definition list of five plain values (weeks, months, years, 40-day blocks, 100-day blocks) in unit-figure type with muted labels beneath, opened by a hairline. No tiles, fills, or borders around individual values.
 
 ### Journey Ticker (signature)
-A Panel Slate inset showing years : months : weeks : days : hours : minutes : seconds in Purpose Teal tabular numerals with tiny uppercase labels, updated each second, followed by a separate total-seconds inset. It is the page's only motion besides the result scroll.
+Years, months, weeks, days, hours, minutes, and seconds in primary-text ticker figures with lowercase micro labels, updated each second, opened by a hairline. Below it, a muted total ("seconds to invest") and a Pause/Play toggle. Under reduced motion the ticker starts paused. It is the page's only continuous motion.
 
 ## Do's and Don'ts
 
 ### Do:
-- **Do** keep Purpose Teal as the only accent, reserved for action, numerals, and focus.
-- **Do** use tabular figures for every number that changes.
-- **Do** separate surfaces by tone and 1px hairlines.
-- **Do** keep the disclaimer and source footnote visible under every result.
-- **Do** make every surface follow the active colour scheme, including the result card and ticker.
+- **Do** keep each scheme's teal as its only accent, reserved for action, the hero figure, the result frame, and focus.
+- **Do** apply every colour through a role token defined in both the dark and light blocks.
+- **Do** use the on-accent token for text on the accent: Night Field on Purpose Teal, Card White on Deep Purpose Teal.
+- **Do** use tabular figures for every number that changes or aligns.
+- **Do** divide result-card sections with 1px hairlines and keep the values inside them unboxed.
+- **Do** keep the source note visible under every result.
+- **Do** give fields and outline buttons the field-border token so their edges hold 3:1.
 
 ### Don't:
-- **Don't** put white text on Purpose Teal: it measures about 2.5:1, below WCAG AA. Use Night Field text on the teal (about 7.6:1).
-- **Don't** use Purpose Teal for text on Dawn Paper or Card White without darkening it: it fails 3:1 even for large numerals.
+- **Don't** put Purpose Teal (#2fb8a4) on the light scheme's paper or white surfaces; the light scheme uses Deep Purpose Teal.
+- **Don't** use a hairline token as the only edge of a control; hairlines are dividers.
 - **Don't** add shadows, gradients, or glows.
+- **Don't** reintroduce stat tiles or boxed insets on the result card; one hero figure leads and everything else is plain text.
 - **Don't** label anything "countdown", "remaining", or "left"; the ticker is a journey, not a clock running out.
 - **Don't** add a second accent colour or decorative illustration to the calculator.
