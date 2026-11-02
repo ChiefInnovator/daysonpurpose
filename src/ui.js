@@ -54,18 +54,22 @@ function populateCountrySelect(dataset) {
 }
 
 let countdownTimer = null;
+let tick = null;
 function stopCountdown() {
   if (countdownTimer) { clearInterval(countdownTimer); countdownTimer = null; }
 }
 
 function clearResult() {
   stopCountdown();
+  tick = null;
   resultRegion.innerHTML = '';
 }
 
-function startCountdown(endMs) {
+const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function setupJourney(endMs) {
   stopCountdown();
-  const root = document.getElementById('countdown');
+  const root = document.getElementById('journey');
   if (!root || !Number.isFinite(endMs)) return;
   const SEC = 1000, MIN = 60 * SEC, HOUR = 60 * MIN, DAY = 24 * HOUR, WEEK = 7 * DAY;
   const YEAR = DAYS_PER_YEAR * DAY;
@@ -73,21 +77,12 @@ function startCountdown(endMs) {
   const slots = ['years', 'months', 'weeks', 'days', 'hours', 'minutes', 'seconds'];
   const cells = {};
   for (const k of slots) cells[k] = root.querySelector('[data-cd="' + k + '"]');
-  const totalSecondsEl = document.querySelector('[data-cd="total-seconds"]');
+  const totalSecondsEl = root.querySelector('[data-cd="total-seconds"]');
+  const toggle = root.querySelector('.journey-toggle');
   function pad(n) { return String(Math.max(0, n)).padStart(2, '0'); }
-  function tick() {
-    let ms = endMs - Date.now();
-    if (ms <= 0) {
-      for (const k of slots) {
-        if (!cells[k]) continue;
-        cells[k].textContent = (k === 'hours' || k === 'minutes' || k === 'seconds') ? '00' : '0';
-      }
-      if (totalSecondsEl) totalSecondsEl.textContent = '0';
-      stopCountdown();
-      return;
-    }
-    const totalSeconds = Math.floor(ms / SEC);
-    if (totalSecondsEl) totalSecondsEl.textContent = totalSeconds.toLocaleString();
+  tick = function () {
+    let ms = Math.max(0, endMs - Date.now());
+    totalSecondsEl.textContent = Math.floor(ms / SEC).toLocaleString();
     const y = Math.floor(ms / YEAR); ms -= y * YEAR;
     const mo = Math.floor(ms / MONTH); ms -= mo * MONTH;
     const w = Math.floor(ms / WEEK); ms -= w * WEEK;
@@ -102,58 +97,97 @@ function startCountdown(endMs) {
     cells.hours.textContent = pad(h);
     cells.minutes.textContent = pad(mi);
     cells.seconds.textContent = pad(s);
-  }
+  };
+  const play = () => { stopCountdown(); tick(); countdownTimer = setInterval(tick, 1000); toggle.textContent = 'Pause'; toggle.setAttribute('aria-pressed', 'false'); };
+  const pause = () => { stopCountdown(); toggle.textContent = 'Play'; toggle.setAttribute('aria-pressed', 'true'); };
+  toggle.addEventListener('click', () => (countdownTimer ? pause() : play()));
   tick();
-  countdownTimer = setInterval(tick, 1000);
+  if (reduceMotion()) pause(); else play();
 }
 
-function tickerHtml() {
-  const cells = ['years', 'months', 'weeks', 'days', 'hours', 'minutes', 'seconds'].map((lbl, i, arr) => {
-    const cell = `<div class="cd-cell"><div class="cd-val" data-cd="${lbl}">--</div><div class="cd-lbl">${lbl}</div></div>`;
-    return i < arr.length - 1 ? cell + '<div class="cd-sep" aria-hidden="true">:</div>' : cell;
-  }).join('');
+function journeyHtml() {
+  const cells = ['years', 'months', 'weeks', 'days', 'hours', 'minutes', 'seconds'].map(lbl =>
+    `<div class="jr-cell"><span class="jr-val" data-cd="${lbl}">--</span><span class="jr-lbl">${lbl}</span></div>`).join('');
   return `
-      <div class="countdown" id="countdown" role="timer" aria-live="off" aria-label="Your journey, live">${cells}</div>
-      <div class="cd-total" role="timer" aria-live="off" aria-label="Seconds to invest">
-        <div class="cd-total-val" data-cd="total-seconds">--</div>
-        <div class="cd-total-lbl">seconds to invest</div>
-      </div>`;
+      <section class="journey" id="journey" aria-label="Your journey, live">
+        <div class="jr-row" role="timer" aria-live="off">${cells}</div>
+        <div class="jr-foot">
+          <p class="jr-total"><span data-cd="total-seconds">--</span> seconds to invest</p>
+          <button type="button" class="journey-toggle" aria-pressed="false">Pause</button>
+        </div>
+      </section>`;
 }
+
+const UNITS = [
+  ['weeks', 'Weeks', j => j.weeks_floor.toLocaleString()],
+  ['months', 'Months', j => j.months_floor.toLocaleString()],
+  ['years', 'Years', j => j.years.toFixed(1)],
+  ['blocks40', '40-day blocks', j => j.blocks40_floor.toLocaleString()],
+  ['blocks100', '100-day blocks', j => j.blocks100_floor.toLocaleString()],
+];
 
 function renderResult(r, info, gender) {
   resultRegion.innerHTML = '';
   const container = document.createElement('div');
   container.className = 'result-card';
-  const showTicker = r.status === 'ok';
-  container.innerHTML = `
-      <div class="result-head">
-        <h2>Your Purpose Days</h2>
-        <p>Approximate days for your journey, based on current averages.</p>
-      </div>${showTicker ? tickerHtml() : ''}
-      <div class="stats">
-        ${['days', 'weeks', 'months', 'years', 'blocks40', 'blocks100'].map(label => {
-          let display, precise, heading;
-          if (label === 'years') { display = r.journey.years.toFixed(2); precise = r.journey.years; heading = 'Years'; }
-          else if (label === 'blocks40') { display = r.journey.blocks40_floor.toLocaleString(); precise = r.journey.blocks40; heading = '40-Day Blocks'; }
-          else if (label === 'blocks100') { display = r.journey.blocks100_floor.toLocaleString(); precise = r.journey.blocks100; heading = '100-Day Blocks'; }
-          else { display = r.journey[label + '_floor'].toLocaleString(); precise = r.journey[label]; heading = label.charAt(0).toUpperCase() + label.slice(1); }
-          return `<div class="stat" data-testid="stat-${label}">
-            <span class="label">${escapeHtml(heading)}</span>
-            <span class="value">${display}</span>
-            <span class="precise">precise: ${precise.toFixed(2)}</span>
-          </div>`; }).join('')}
-      </div>
-      <p class="message">${escapeHtml(r.message)}</p>
-      <p class="note">Based on life expectancy at birth for ${escapeHtml(info.country)} (${escapeHtml(gender)}), UN World Population Prospects 2024 (${escapeHtml(info.year)} estimate). Statistical estimate, not an individual prediction.</p>
-    `;
+  const note = `<p class="note">Based on life expectancy at birth for ${escapeHtml(info.country)} (${escapeHtml(gender)}): ${info.years.toFixed(1)} years. Source: UN World Population Prospects 2024 (${escapeHtml(info.year)} estimate).</p>`;
+  if (r.status === 'ok') {
+    const days = r.journey.days_floor.toLocaleString();
+    container.innerHTML = `
+      <h2 class="hero" data-testid="stat-days"><span class="hero-num">${days}</span> <span class="hero-unit">purpose days</span></h2>
+      <p class="hero-sub">Approximately, based on current averages.</p>
+      <p class="message">What will you invest one day in today?</p>
+      <dl class="units">
+        ${UNITS.map(([key, label, fmt]) => `<div data-testid="stat-${key}"><dt>${label}</dt><dd>${fmt(r.journey)}</dd></div>`).join('')}
+      </dl>${journeyHtml()}
+      <div class="actions"><button type="button" class="share-btn">Share Days on Purpose</button></div>
+      ${note}`;
+    container.querySelector('.share-btn').addEventListener('click', e => share(e.currentTarget, days));
+  } else {
+    container.innerHTML = `
+      <h2 class="hero hero-beyond">You’ve surpassed the average.</h2>
+      <p class="message">Keep investing in what matters.</p>
+      <p class="hero-sub">At ${r.age_years.toFixed(1)}, you are ${(r.age_years - info.years).toFixed(1)} years past the average. Every day from here is one you get to invest.</p>
+      <div class="actions"><button type="button" class="share-btn">Share Days on Purpose</button></div>
+      ${note}`;
+    container.querySelector('.share-btn').addEventListener('click', e => share(e.currentTarget, null));
+  }
   resultRegion.appendChild(container);
-  if (showTicker) startCountdown(r.end_timestamp_ms);
-  container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  if (r.status === 'ok') setupJourney(r.end_timestamp_ms);
+  container.scrollIntoView({ behavior: reduceMotion() ? 'auto' : 'smooth', block: 'start' });
   resultRegion.focus();
 }
 
-function validate() {
-  calcBtn.disabled = !(birthInput.value && birthInput.value <= birthInput.max && countryInput.value && genderSelect.value);
+async function share(button, days) {
+  const url = location.origin + location.pathname;
+  const text = days
+    ? `I have about ${days} purpose days. What will you invest one day in today?`
+    : 'How many purpose days do you have? What will you invest one day in today?';
+  const original = 'Share Days on Purpose';
+  try {
+    if (navigator.share) {
+      await navigator.share({ title: 'Days on Purpose', text, url });
+      return;
+    }
+    await navigator.clipboard.writeText(`${text} ${url}`);
+    button.textContent = 'Link copied';
+  } catch (err) {
+    if (err && err.name === 'AbortError') return;
+    button.textContent = 'Could not share — copy the page address instead';
+  }
+  setTimeout(() => { button.textContent = original; }, 2500);
+}
+
+function setFieldError(message) {
+  if (message) {
+    showError(message);
+    birthInput.setAttribute('aria-invalid', 'true');
+    birthInput.focus();
+  } else {
+    errorEl.hidden = true;
+    errorEl.textContent = '';
+    birthInput.removeAttribute('aria-invalid');
+  }
 }
 
 export function initUi(dataset) {
@@ -172,7 +206,7 @@ export function initUi(dataset) {
   saveForm();
   try { for (const key of LS_LEGACY_KEYS) localStorage.removeItem(key); } catch {}
 
-  const onChange = () => { clearResult(); validate(); saveForm(); };
+  const onChange = () => { clearResult(); setFieldError(null); saveForm(); };
   [birthInput, countryInput, genderSelect].forEach(el => {
     el.addEventListener('input', onChange);
     el.addEventListener('change', onChange);
@@ -180,7 +214,8 @@ export function initUi(dataset) {
 
   form.addEventListener('submit', e => {
     e.preventDefault();
-    errorEl.hidden = true; errorEl.textContent = '';
+    setFieldError(null);
+    if (!birthInput.value) { clearResult(); setFieldError('Enter your birth date.'); return; }
     try {
       const info = lookup(dataset, countryInput.value, genderSelect.value);
       if (!info) throw new Error('Could not load life expectancy data. Please reload.');
@@ -188,11 +223,10 @@ export function initUi(dataset) {
       renderResult(calc, info, genderSelect.value);
     } catch (err) {
       clearResult();
-      showError(err.message || 'Calculation failed');
-    } finally {
-      validate();
+      if (err instanceof RangeError) setFieldError(err.message);
+      else showError(err.message || 'Calculation failed');
     }
   });
 
-  validate();
+  calcBtn.disabled = false;
 }
