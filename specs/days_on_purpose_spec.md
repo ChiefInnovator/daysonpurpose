@@ -43,7 +43,7 @@ Create an application that helps users frame their lives around **purposeful act
     "weeks_floor": 1112,
     "days_floor": 7786
   },
-  "end_timestamp_ms": 3018816000000,
+  "end_timestamp_ms": 2459378233440,
   "status": "ok",
   "message": "You have approximately 7,786 purpose-days in your journey. What will you invest one day in today?"
 }
